@@ -1,7 +1,7 @@
 /* Service worker: lets the installed app open and run without a connection.
    The page itself is fetched from the network first so updates show straight away;
    the cached copy is used only when offline. Bump CACHE when the file list changes. */
-const CACHE = 'ibnr-demo-v2';
+const CACHE = 'ibnr-demo-v3';
 const ASSETS = [
   './',
   './index.html',
@@ -9,7 +9,8 @@ const ASSETS = [
   './icons/icon.svg',
   './icons/icon-192.png',
   './icons/icon-512.png',
-  './icons/apple-touch-icon.png'
+  './icons/apple-touch-icon.png',
+  './icons/databeyond-logo.png'
 ];
 
 self.addEventListener('install', event => {

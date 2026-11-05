@@ -59,6 +59,16 @@ main{max-width:1180px;margin:0 auto;padding-top:1.25rem;padding-bottom:calc(4rem
 main:focus{outline:none}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:1.1rem 1.2rem;box-shadow:var(--shadow);margin-bottom:1rem}
 .card.soft{background:var(--surface-2)}
+.db-logo{display:inline-flex;flex:none;background:#fff;border:1px solid var(--line);border-radius:8px;padding:2px 6px;line-height:0;transition:box-shadow .15s}
+.db-logo:hover{box-shadow:var(--shadow)}
+.db-logo:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.db-logo img{height:44px;width:auto;display:block}
+@media (max-width:640px){
+  .top-inner{justify-content:flex-start}
+  .top-actions{display:contents}
+  .db-logo{margin-left:auto}
+  .db-logo img{height:36px}
+}
 .grid{display:grid;gap:.85rem 1rem}
 .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -188,7 +198,7 @@ td,dd,.item>div{overflow-wrap:anywhere;min-width:0}
 <header class="top"><div class="top-inner">
   <div class="logo"><div class="logo-mark" aria-hidden="true">IBNR</div><div>Irish Beauty &amp; Nail Register<small>Professional registration portal (prototype)</small></div></div>
   <div class="top-actions">
-    <button type="button" class="btn small" id="install-btn" data-act="install" hidden>Install app</button>
+    <a class="db-logo" href="https://databeyond.uk" target="_blank" rel="noopener" title="Data Beyond" aria-label="Data Beyond website (opens in a new tab)"><img src="icons/databeyond-logo.png" alt="Data Beyond" width="480" height="391"></a>
     <button type="button" class="menu-btn" id="menu-btn" data-act="menu" aria-expanded="false" aria-controls="nav">
       <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg><span id="menu-label">Menu</span></button>
   </div>
@@ -489,8 +499,8 @@ function vInstallCard() {
   return `<div class="card soft"><h2>Use it as an app on your computer or phone</h2>
     <p class="small muted">The register works in any modern browser. You can also install it so it opens in its own window, gets a home-screen icon and works offline.</p>
     <div class="grid g3 small">
-      <div><b>Windows or Mac</b><br>In Chrome or Edge, click <b>Install app</b> at the top of this page, or the install icon in the address bar.</div>
-      <div><b>Android</b><br>In Chrome, tap <b>Install app</b> above, or open the browser menu and choose <b>Add to Home screen</b>.</div>
+      <div><b>Windows or Mac</b><br>In Chrome or Edge, click the install icon at the right of the address bar.</div>
+      <div><b>Android</b><br>In Chrome, open the browser menu and choose <b>Install app</b> or <b>Add to Home screen</b>.</div>
       <div><b>iPhone or iPad</b><br>In Safari, tap the <b>Share</b> button, then <b>Add to Home Screen</b>.</div>
     </div></div>`;
 }
@@ -1258,18 +1268,12 @@ document.addEventListener('click', e => {
     case 'close-csv': ui.csv = null; render(); break;
     case 'menu': ui.menuOpen = !ui.menuOpen; renderNav(); break;
     case 'to-decision': document.getElementById('decision')?.scrollIntoView({ block:'start' }); break;
-    case 'install':
-      if (installPrompt) { installPrompt.prompt(); installPrompt.userChoice.finally(() => { installPrompt = null; $('#install-btn').hidden = true; }); }
-      break;
   }
 });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && ui.menuOpen) { ui.menuOpen = false; renderNav(); $('#menu-btn').focus(); } });
 window.matchMedia('(min-width: 901px)').addEventListener?.('change', ev => { if (ev.matches && ui.menuOpen) { ui.menuOpen = false; renderNav(); } });
 
-/* ---------- Installable app (PWA) ---------- */
-let installPrompt = null;
-window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installPrompt = e; $('#install-btn').hidden = false; });
-window.addEventListener('appinstalled', () => { installPrompt = null; $('#install-btn').hidden = true; });
+/* ---------- Installable app (PWA): the browser shows its own install option ---------- */
 if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
   window.addEventListener('load', () => {
     try { navigator.serviceWorker.register('sw.js').catch(() => {}); } catch (err) { /* not available here, e.g. inside an embedded viewer */ }
