@@ -1,0 +1,1303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Irish Beauty &amp; Nail Register</title>
+<meta name="description" content="Apply, pay and manage professional registration for beauty therapists and nail technicians in Ireland.">
+<meta name="theme-color" content="#0e5c49" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1a1f1d" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="IBN Register">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<style>
+:root{
+  --bg:#f5f3ef;--surface:#fff;--surface-2:#faf9f6;--ink:#1c2320;--muted:#5d6964;--line:#dde2de;
+  --brand:#0e5c49;--brand-ink:#fff;--brand-soft:#e2eee9;--accent:#a8426f;
+  --ok:#1b7443;--ok-soft:#e0f2e6;--warn:#8f5b00;--warn-soft:#fff2d6;--bad:#a3302b;--bad-soft:#fbe4e2;--info:#2a5ba3;--info-soft:#e3ebf7;
+  --radius:10px;--shadow:0 1px 2px rgba(0,0,0,.05),0 2px 8px rgba(0,0,0,.04);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#111513;--surface:#1a1f1d;--surface-2:#161b19;--ink:#e6ebe8;--muted:#98a49e;--line:#2d3431;
+  --brand:#4db291;--brand-ink:#08130f;--brand-soft:#1d3129;--accent:#e08ab0;
+  --ok:#6fcf97;--ok-soft:#163020;--warn:#e3a843;--warn-soft:#30270e;--bad:#ef7d75;--bad-soft:#381c1a;--info:#88aef0;--info-soft:#1a2537;--shadow:none;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111513;--surface:#1a1f1d;--surface-2:#161b19;--ink:#e6ebe8;--muted:#98a49e;--line:#2d3431;
+  --brand:#4db291;--brand-ink:#08130f;--brand-soft:#1d3129;--accent:#e08ab0;
+  --ok:#6fcf97;--ok-soft:#163020;--warn:#e3a843;--warn-soft:#30270e;--bad:#ef7d75;--bad-soft:#381c1a;--info:#88aef0;--info-soft:#1a2537;--shadow:none;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+h1,h2,h3{line-height:1.25;margin:0 0 .5rem}
+h1{font-size:1.5rem}h2{font-size:1.2rem}h3{font-size:1rem}
+p{margin:.25rem 0 .75rem}
+a{color:var(--brand)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--surface);z-index:30}
+.demo-bar{background:var(--warn-soft);color:var(--warn);font-size:.85rem;text-align:center;border-bottom:1px solid var(--line);
+  padding:calc(.4rem + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) .4rem max(16px,env(safe-area-inset-left,0px))}
+header.top{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);z-index:20}
+.top-inner{max-width:1180px;margin:0 auto;padding-block:.75rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-wrap:wrap;gap:.75rem 1.5rem;align-items:center;justify-content:space-between}
+.top-actions{display:flex;gap:.5rem;align-items:center}
+.menu-btn{display:none;align-items:center;gap:.45rem;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:.45rem .75rem;font:inherit;font-weight:600;font-size:.88rem;cursor:pointer;max-width:52vw}
+.menu-btn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.menu-btn svg{flex:none}
+.mobile-only{display:none}
+.logo{display:flex;gap:.6rem;align-items:center;font-weight:700}
+.logo-mark{width:34px;height:34px;border-radius:8px;background:var(--brand);color:var(--brand-ink);display:grid;place-items:center;font-size:.8rem;letter-spacing:.02em}
+.logo small{display:block;font-weight:400;color:var(--muted);font-size:.78rem}
+nav.tabs{display:flex;flex-wrap:wrap;gap:.25rem 1rem}
+.tab-group{display:flex;gap:.25rem;align-items:center}
+.tab-group>span{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-right:.15rem}
+.tab{border:0;background:none;color:var(--ink);padding:.4rem .65rem;border-radius:7px;cursor:pointer;font:inherit;font-size:.9rem}
+.tab:hover{background:var(--brand-soft)}
+.tab[aria-current="page"]{background:var(--brand);color:var(--brand-ink)}
+main{max-width:1180px;margin:0 auto;padding-top:1.25rem;padding-bottom:calc(4rem + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main:focus{outline:none}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:1.1rem 1.2rem;box-shadow:var(--shadow);margin-bottom:1rem}
+.card.soft{background:var(--surface-2)}
+.grid{display:grid;gap:.85rem 1rem}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.span2{grid-column:span 2}
+@media (max-width:760px){.g2,.g3{grid-template-columns:1fr}.span2{grid-column:auto}}
+label{display:block;font-weight:600;font-size:.86rem;margin-bottom:.25rem}
+label .opt{font-weight:400;color:var(--muted)}
+input[type=text],input[type=email],input[type=tel],input[type=date],input[type=number],input[type=search],select,textarea{
+  width:100%;padding:.55rem .65rem;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink);font:inherit}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--brand);outline-offset:1px}
+textarea{min-height:70px;resize:vertical}
+input[type=file]{font-size:.85rem;max-width:100%}
+.hint{font-size:.8rem;color:var(--muted);margin-top:.2rem}
+.row{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+.row.end{justify-content:flex-end}
+.row.between{justify-content:space-between}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:.5rem .9rem;border-radius:7px;cursor:pointer;font:inherit;font-weight:600;font-size:.88rem}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
+.btn.danger{color:var(--bad);border-color:var(--bad)}
+.btn.ok{color:var(--ok);border-color:var(--ok)}
+.btn.small{padding:.25rem .55rem;font-size:.8rem}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.3rem .8rem}
+.checks label,.check{font-weight:400;display:flex;gap:.45rem;align-items:flex-start;font-size:.88rem}
+.check input,.checks input{margin-top:.25rem}
+.err{background:var(--bad-soft);color:var(--bad);border-radius:7px;padding:.5rem .75rem;font-size:.86rem;margin-bottom:.75rem}
+.err:empty{display:none}
+.flash{background:var(--ok-soft);color:var(--ok);border-radius:var(--radius);padding:.65rem 1rem;margin-bottom:1rem;font-weight:600}
+.note{background:var(--info-soft);color:var(--info);border-radius:7px;padding:.55rem .8rem;font-size:.86rem;margin:.5rem 0 .9rem}
+.badge{display:inline-block;font-size:.74rem;font-weight:700;padding:.12rem .5rem;border-radius:999px;white-space:nowrap;background:var(--line);color:var(--ink)}
+.b-ok{background:var(--ok-soft);color:var(--ok)}
+.b-warn{background:var(--warn-soft);color:var(--warn)}
+.b-bad{background:var(--bad-soft);color:var(--bad)}
+.b-info{background:var(--info-soft);color:var(--info)}
+.b-brand{background:var(--brand-soft);color:var(--brand)}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th,td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600}
+tr.clickable{cursor:pointer}
+tr.clickable:hover td{background:var(--brand-soft)}
+.steps{display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:1rem;padding:0;list-style:none;counter-reset:s}
+.steps li{flex:1 1 110px;font-size:.78rem;color:var(--muted);border-top:4px solid var(--line);padding-top:.35rem;counter-increment:s}
+.steps li::before{content:counter(s) ". "}
+.steps li.done{border-color:var(--brand-soft);color:var(--ink)}
+.steps li.now{border-color:var(--brand);color:var(--brand);font-weight:700}
+.items{display:grid;gap:.5rem;margin-bottom:1rem}
+.item{border:1px solid var(--line);border-radius:8px;padding:.6rem .8rem;display:flex;justify-content:space-between;gap:1rem;align-items:flex-start;background:var(--surface-2)}
+.item .meta{font-size:.82rem;color:var(--muted)}
+.empty{color:var(--muted);font-style:italic;font-size:.88rem}
+dl.kv{display:grid;grid-template-columns:minmax(120px,max-content) 1fr;gap:.25rem 1rem;margin:0;font-size:.88rem}
+dl.kv dt{color:var(--muted)}
+dl.kv dd{margin:0}
+.split{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:1rem;align-items:start}
+@media (max-width:900px){.split{grid-template-columns:1fr}}
+.sticky{position:sticky;top:1rem}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.75rem;margin-bottom:1rem}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:.75rem 1rem}
+.kpi b{display:block;font-size:1.5rem}
+.kpi span{font-size:.8rem;color:var(--muted)}
+.ev{border:1px solid var(--line);border-radius:8px;padding:.6rem .75rem;margin:.4rem 0;background:var(--surface-2)}
+.ev-hist{font-size:.78rem;color:var(--muted);margin:.3rem 0 0;padding-left:1rem}
+.section-title{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;margin:1.1rem 0 .4rem;padding-bottom:.25rem;border-bottom:1px solid var(--line)}
+.section-title:first-child{margin-top:0}
+.pub-card{display:grid;grid-template-columns:1fr auto;gap:.5rem 1rem}
+.mono{font-family:ui-monospace,Consolas,monospace}
+.muted{color:var(--muted)}
+.small{font-size:.82rem}
+.checklist li{margin-bottom:.45rem}
+.paybox{border:1px dashed var(--line);border-radius:8px;padding:1rem;background:var(--surface-2)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.step-label{display:none;font-weight:700;color:var(--brand);margin:0 0 .5rem;font-size:.9rem}
+td,dd,.item>div{overflow-wrap:anywhere;min-width:0}
+
+/* ---------- Tablet and phone ---------- */
+@media (max-width:900px){
+  .sticky{position:static}
+  .mobile-only{display:inline-flex}
+  .menu-btn{display:inline-flex}
+  nav.tabs{display:none;width:100%;flex-direction:column;gap:.75rem;padding:.25rem 0 .5rem;max-height:calc(100dvh - 140px);overflow-y:auto}
+  header.top.open nav.tabs{display:flex}
+  .tab-group{flex-direction:column;align-items:stretch;gap:.15rem}
+  .tab-group>span{margin:0 0 .15rem .65rem}
+  .tab{text-align:left;padding:.65rem .75rem;font-size:1rem}
+  .logo small{display:none}
+}
+@media (max-width:760px){
+  body{font-size:15px}
+  h1{font-size:1.3rem}h2{font-size:1.1rem}
+  .demo-bar{font-size:.76rem}
+  .card{padding:.9rem .9rem}
+  input[type=text],input[type=email],input[type=tel],input[type=date],input[type=number],input[type=search],select,textarea{font-size:16px}
+  .steps{flex-wrap:nowrap;gap:.2rem;margin-bottom:.4rem}
+  .steps li{flex:1 1 0;min-width:0;font-size:0;padding-top:0;border-top-width:5px}
+  .steps li::before{content:none}
+  .step-label{display:block}
+  .item{flex-direction:column;gap:.5rem}
+  .pub-card{grid-template-columns:1fr}
+  .card .row.between>.btn.primary{flex:1 1 auto}
+}
+@media (max-width:640px){
+  table.stack thead{display:none}
+  table.stack,table.stack tbody,table.stack tr{display:block;width:100%}
+  table.stack tr{border:1px solid var(--line);border-radius:8px;margin-bottom:.6rem;padding:.35rem .7rem;background:var(--surface-2)}
+  table.stack td{display:block;position:relative;border:0;padding:.35rem 0 .35rem 7rem;min-height:1.9rem}
+  table.stack td::before{content:attr(data-label);position:absolute;left:0;top:.5rem;width:6.4rem;font:600 .68rem/1.3 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+  table.stack td[colspan]{padding-left:0}
+  table.stack td[colspan]::before{content:none}
+  table.stack td .row{flex-wrap:wrap!important}
+  table.stack td input[type=text],table.stack td select{width:100%!important}
+  .table-wrap{overflow:visible}
+}
+@media (pointer:coarse){
+  .btn{min-height:44px}
+  .btn.small{min-height:38px}
+  .tab{min-height:44px}
+  .checks label,.check{padding:.2rem 0}
+  input[type=checkbox]{width:20px;height:20px;flex:none}
+}
+@media (display-mode:standalone){.demo-bar{font-size:.72rem}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="demo-bar" role="note">Demonstration build. Fictional data only. Live applications and payments are switched off; no money is taken and no emails are sent.</div>
+<header class="top"><div class="top-inner">
+  <div class="logo"><div class="logo-mark" aria-hidden="true">IBNR</div><div>Irish Beauty &amp; Nail Register<small>Professional registration portal (prototype)</small></div></div>
+  <div class="top-actions">
+    <button type="button" class="btn small" id="install-btn" data-act="install" hidden>Install app</button>
+    <button type="button" class="menu-btn" id="menu-btn" data-act="menu" aria-expanded="false" aria-controls="nav">
+      <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg><span id="menu-label">Menu</span></button>
+  </div>
+  <nav class="tabs" id="nav" aria-label="Main"></nav>
+</div></header>
+<main id="app" tabindex="-1"></main>
+
+<script>
+/* ============================================================
+   Irish Beauty & Nail Register: sample app (single file, no server)
+   Data model follows the software brief and data-flow diagram.
+   Everything persists in this browser's localStorage only.
+   ============================================================ */
+const KEY = 'ibnr-demo-v1', DRAFT_KEY = 'ibnr-draft-v1';
+
+const CATEGORIES = ['Beauty therapist', 'Nail technician', 'Beauty therapist and nail technician'];
+const TREATMENTS = ['Manicure', 'Pedicure', 'Gel and acrylic enhancements', 'Nail art', 'Facials', 'Waxing',
+  'Eyelash extensions', 'Brow shaping and tinting', 'Body massage', 'Spray tan', 'Make-up', 'Electrolysis'];
+const SETTINGS_LIST = ['Salon', 'Home-based', 'Mobile'];
+const EMPLOYMENT = ['Employed', 'Self-employed', 'Owner'];
+const DECLARATIONS = [
+  ['accurate', 'The information I have given is accurate and complete.'],
+  ['standards', 'I agree to follow the Register’s professional standards (version STD-0.1).'],
+  ['privacy', 'I have read the privacy notice and understand how my information is used.'],
+  ['payment', 'I understand that paying the fee does not approve my application. An administrator must review my evidence first.'],
+];
+const ROUTING = {D02:'Dublin 2',D04:'Dublin 4',D06:'Dublin 6',D08:'Dublin 8',D15:'Dublin 15',D24:'Dublin 24',T12:'Cork',T23:'Cork',
+  H91:'Galway',V94:'Limerick',X91:'Waterford',A92:'Drogheda',R95:'Kilkenny',F92:'Letterkenny',N37:'Athlone',P72:'Bandon',W23:'Celbridge',Y35:'Wexford',E91:'Tipperary'};
+const STREETS = ['Main Street','Church Road','Market Square','Bridge Street','Station Road','Mill Lane','Green Park','Castle Street'];
+
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid = p => p + '-' + Math.random().toString(36).slice(2, 8).toUpperCase();
+const iso = d => d.toISOString().slice(0, 10);
+const today = () => iso(new Date());
+const addDays = (d, n) => { const x = new Date(d + 'T12:00:00'); x.setDate(x.getDate() + n); return iso(x); };
+const addMonths = (d, n) => { const x = new Date(d + 'T12:00:00'); x.setMonth(x.getMonth() + n); return iso(x); };
+const daysUntil = d => Math.round((new Date(d + 'T12:00:00') - new Date(today() + 'T12:00:00')) / 864e5);
+const fmtDate = d => d ? new Date(d.length > 10 ? d : d + 'T12:00:00').toLocaleDateString('en-IE', {day:'numeric', month:'short', year:'numeric'}) : '—';
+const fmtDT = d => new Date(d).toLocaleString('en-IE', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'});
+const money = (n, c = 'EUR') => new Intl.NumberFormat('en-IE', {style:'currency', currency:c}).format(n);
+const fmtSize = b => b > 1048576 ? (b / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB';
+const EIRCODE = /^([AC-FHKNPRTV-Y]\d{2}|D6W)[0-9AC-FHKNPRTV-Y]{4}$/;
+const normEir = e => String(e || '').replace(/\s/g, '').toUpperCase();
+const fmtEir = e => { const c = normEir(e); return c.length === 7 ? c.slice(0, 3) + ' ' + c.slice(3) : c; };
+
+function addressLookup(eir) {
+  const c = normEir(eir);
+  if (!EIRCODE.test(c)) return null;
+  const town = ROUTING[c.slice(0, 3)] || 'Ireland';
+  const n = [...c].reduce((a, ch) => a + ch.charCodeAt(0), 0);
+  return { eircode: fmtEir(c), town, line: `${(n % 88) + 2} ${STREETS[n % STREETS.length]}, ${town}` };
+}
+
+const STATUS_BADGE = {
+  'Pending':'b-warn','Under review':'b-info','Further evidence needed':'b-warn','Approved':'b-ok','Declined':'b-bad',
+  'Verified':'b-ok','Rejected':'b-bad','Paid':'b-ok','Failed':'b-bad','Refunded':'b-info',
+  'Active':'b-ok','Expired':'b-bad','Suspended':'b-bad','Withdrawn':'b-bad'
+};
+const badge = s => `<span class="badge ${STATUS_BADGE[s] || ''}">${esc(s)}</span>`;
+
+/* ---------- data store ---------- */
+const ADMIN = 'Demo Reviewer (admin)';
+let db = load();
+let draft = loadDraft();
+const ui = { view:'overview', step:0, sel:null, filter:'open', q:'', pubQ:'', myId:null, flash:null, confirm:null, regFilter:'all' };
+const pendingFiles = {};
+
+function load() {
+  try { const s = localStorage.getItem(KEY); if (s) return JSON.parse(s); } catch (e) {}
+  return seed();
+}
+function save() { try { localStorage.setItem(KEY, JSON.stringify(db)); } catch (e) {} }
+function blankDraft() { return { person:{}, workplaces:[], qualifications:[], training:[], insurance:[], decl:{} }; }
+function loadDraft() { try { const s = localStorage.getItem(DRAFT_KEY); if (s) return JSON.parse(s); } catch (e) {} return blankDraft(); }
+function saveDraft() { try { localStorage.setItem(DRAFT_KEY, JSON.stringify(draft)); } catch (e) {} }
+
+function audit(actor, action, entity, detail) {
+  db.audit.unshift({ id:uid('AUD'), at:new Date().toISOString(), actor, action, entity, detail });
+}
+function notify(type, recipient, link) {
+  db.notifications.unshift({ id:uid('NTF'), type, recipient, scheduled:today(), sent:null, status:'Queued (demo, not sent)', link });
+}
+
+/* ---------- seed: fictional records for the demonstration ---------- */
+function seed() {
+  const t = today();
+  const d = {
+    settings:{ orgName:'Irish Beauty & Nail Register', hqAddress:'', hqEmail:'', hqPhone:'', fee:50, currency:'EUR',
+      periodMonths:12, reminderDays:'60, 30, 7', livePayments:false, publicRegister:true, nextRegNo:1003, declarationVersion:'DEC-0.1' },
+    professionals:[], businesses:[], workplaces:[], qualifications:[], training:[], insurance:[], evidence:[],
+    applications:[], registrations:[], payments:[], declarations:[], audit:[], notifications:[]
+  };
+  const ev = (personId, kind, refId, fileName, status, by, at = t, reason) => {
+    const id = uid('EV');
+    const hist = [{ status:'Pending', by:'Applicant', at:addDays(at, -3), reason:'Uploaded' }];
+    if (status !== 'Pending') hist.push({ status, by, at, reason:reason || '' });
+    d.evidence.push({ id, personId, kind, refId, fileName, fileSize:420000, status, history:hist });
+    return id;
+  };
+  // P1: one person, two qualifications, two workplaces, approved and renewed once
+  const p1 = 'PER-AOIFE1', b1 = 'BUS-LUSTRE', b2 = 'BUS-AOMOB';
+  d.professionals.push({ id:p1, fullName:'Aoife Brennan', email:'aoife.brennan@example.ie', phone:'087 000 1101', dob:'1991-04-12',
+    address:'14 Church Road, Galway', eircode:'H91 X2Y4', category:'Beauty therapist and nail technician', createdAt:addMonths(t, -14) });
+  d.businesses.push({ id:b1, name:'Lustre Nail Studio', setting:'Salon', address:'3 Market Square, Galway', eircode:'H91 K7P2', town:'Galway', publicLocation:'Galway city', phone:'091 000 220', email:'hello@lustre.example.ie' });
+  d.businesses.push({ id:b2, name:'Aoife Brennan Mobile Beauty', setting:'Mobile', address:'(private home address)', eircode:'H91 X2Y4', town:'Galway', publicLocation:'Galway city and county (mobile)', phone:'', email:'' });
+  d.workplaces.push({ id:'WP-1', personId:p1, businessId:b1, employment:'Employed', start:addMonths(t, -30), end:'', current:true });
+  d.workplaces.push({ id:'WP-2', personId:p1, businessId:b2, employment:'Self-employed', start:addMonths(t, -18), end:'', current:true });
+  const q1 = 'QUA-1', q2 = 'QUA-2';
+  d.qualifications.push({ id:q1, personId:p1, title:'Level 5 Certificate in Beauty Therapy', awardingBody:'Example Awarding Body', provider:'Western Beauty College', awardDate:'2012-06-20', certNo:'CERT-55120', treatments:['Facials','Waxing','Brow shaping and tinting','Make-up'] });
+  d.qualifications.push({ id:q2, personId:p1, title:'Diploma in Nail Technology', awardingBody:'Example Nail Academy', provider:'Example Nail Academy', awardDate:'2015-09-02', certNo:'', treatments:['Manicure','Pedicure','Gel and acrylic enhancements','Nail art'] });
+  d.qualifications[0].evidenceId = ev(p1, 'Qualification', q1, 'beauty-therapy-cert.pdf', 'Verified', ADMIN, addMonths(t, -13));
+  d.qualifications[1].evidenceId = ev(p1, 'Qualification', q2, 'nail-diploma.jpg', 'Verified', ADMIN, addMonths(t, -13));
+  d.insurance.push({ id:'INS-1', personId:p1, businessId:null, coverType:'Personal', insurer:'Example Insurance DAC', policyNo:'PL-889102', from:addMonths(t, -2), to:addMonths(t, 10), treatments:[...TREATMENTS.slice(0, 7)] });
+  d.insurance[0].evidenceId = ev(p1, 'Insurance', 'INS-1', 'insurance-schedule-2026.pdf', 'Verified', ADMIN, addMonths(t, -2));
+  d.training.push({ id:'TRN-1', personId:p1, title:'Advanced Gel Techniques', provider:'Example Nail Academy', completed:addMonths(t, -8), treatment:'Gel and acrylic enhancements' });
+  d.training[0].evidenceId = ev(p1, 'Training', 'TRN-1', 'gel-cpd.pdf', 'Verified', ADMIN, addMonths(t, -7));
+  d.applications.push({ id:'APP-A1', personId:p1, submitted:addMonths(t, -13), status:'Approved', reviewer:ADMIN, decisionDate:addMonths(t, -13), decisionReason:'All evidence verified.', duplicateOf:[] });
+  d.payments.push({ id:'PAY-1', personId:p1, linkType:'Application', linkId:'APP-A1', feeDue:50, currency:'EUR', amount:50, date:addMonths(t, -13), providerRef:'demo_ch_1A2B3C', status:'Paid', refund:0, period:`${addMonths(t, -13)} to ${addDays(addMonths(t, -1), -1)}`, receipt:'RCT-1001', cardLast4:'4242' });
+  d.payments.push({ id:'PAY-2', personId:p1, linkType:'Renewal', linkId:'IBNR-001001', feeDue:50, currency:'EUR', amount:50, date:addMonths(t, -1), providerRef:'demo_ch_9Z8Y7X', status:'Paid', refund:0, period:`${addMonths(t, -1)} to ${addDays(addMonths(t, 11), -1)}`, receipt:'RCT-1007', cardLast4:'4242' });
+  d.registrations.push({ regNo:'IBNR-001001', personId:p1, approved:addMonths(t, -13), status:'Active',
+    periods:[{ start:addMonths(t, -13), end:addDays(addMonths(t, -1), -1), paymentId:'PAY-1' }, { start:addMonths(t, -1), end:addDays(addMonths(t, 11), -1), paymentId:'PAY-2' }],
+    statusHistory:[{ status:'Active', at:addMonths(t, -13), by:ADMIN, reason:'Application approved' }, { status:'Active', at:addMonths(t, -1), by:'System', reason:'Renewed: new period, same number' }] });
+  d.declarations.push({ id:'DEC-1', personId:p1, version:'DEC-0.1', items:DECLARATIONS.map(x => x[0]), agreedAt:addMonths(t, -13), commsOptIn:true });
+
+  // P2: Róisín, active but renewal due soon
+  const p2 = 'PER-ROISIN';
+  d.professionals.push({ id:p2, fullName:'Róisín Hartigan', email:'roisin.h@example.ie', phone:'086 000 4433', dob:'1988-11-02', address:'7 Mill Lane, Kilkenny', eircode:'R95 A1B2', category:'Nail technician', createdAt:addMonths(t, -12) });
+  d.businesses.push({ id:'BUS-RH', name:'Hartigan Nails at Home', setting:'Home-based', address:'(private home address)', eircode:'R95 A1B2', town:'Kilkenny', publicLocation:'Kilkenny town', phone:'', email:'' });
+  d.workplaces.push({ id:'WP-3', personId:p2, businessId:'BUS-RH', employment:'Self-employed', start:addMonths(t, -40), end:'', current:true });
+  d.qualifications.push({ id:'QUA-3', personId:p2, title:'Certificate in Nail Technology', awardingBody:'Example Awarding Body', provider:'Kilkenny Training Centre', awardDate:'2016-05-10', certNo:'CERT-77231', treatments:['Manicure','Pedicure','Nail art'] });
+  d.qualifications[2].evidenceId = ev(p2, 'Qualification', 'QUA-3', 'nail-cert.pdf', 'Verified', ADMIN, addMonths(t, -11));
+  d.insurance.push({ id:'INS-2', personId:p2, businessId:'BUS-RH', coverType:'Business', insurer:'Example Mutual', policyNo:'BM-22019', from:addMonths(t, -11), to:addDays(t, 40), treatments:['Manicure','Pedicure','Nail art'] });
+  d.insurance[1].evidenceId = ev(p2, 'Insurance', 'INS-2', 'policy.pdf', 'Verified', ADMIN, addMonths(t, -11));
+  d.applications.push({ id:'APP-A2', personId:p2, submitted:addMonths(t, -12), status:'Approved', reviewer:ADMIN, decisionDate:addMonths(t, -11), decisionReason:'All evidence verified.', duplicateOf:[] });
+  d.payments.push({ id:'PAY-3', personId:p2, linkType:'Application', linkId:'APP-A2', feeDue:50, currency:'EUR', amount:50, date:addMonths(t, -12), providerRef:'demo_ch_4D5E6F', status:'Paid', refund:0, period:'', receipt:'RCT-1002', cardLast4:'4242' });
+  const p2start = addDays(addMonths(t, -12), 21);
+  d.registrations.push({ regNo:'IBNR-001002', personId:p2, approved:p2start, status:'Active', periods:[{ start:p2start, end:addDays(addMonths(p2start, 12), -1), paymentId:'PAY-3' }],
+    statusHistory:[{ status:'Active', at:p2start, by:ADMIN, reason:'Application approved' }] });
+  d.declarations.push({ id:'DEC-2', personId:p2, version:'DEC-0.1', items:DECLARATIONS.map(x => x[0]), agreedAt:addMonths(t, -12), commsOptIn:false });
+
+  // P3: Ciara, paid, waiting in the review queue
+  const p3 = 'PER-CIARA';
+  d.professionals.push({ id:p3, fullName:'Ciara Doyle', email:'ciara.doyle@example.ie', phone:'085 000 7788', dob:'1997-02-21', address:'22 Bridge Street, Cork', eircode:'T12 F3G4', category:'Beauty therapist', createdAt:addDays(t, -2) });
+  d.businesses.push({ id:'BUS-GLOW', name:'Glow Room Cork', setting:'Salon', address:'5 Castle Street, Cork', eircode:'T12 H5J6', town:'Cork', publicLocation:'Cork city', phone:'021 000 991', email:'' });
+  d.workplaces.push({ id:'WP-4', personId:p3, businessId:'BUS-GLOW', employment:'Employed', start:'2022-03-01', end:'', current:true });
+  d.qualifications.push({ id:'QUA-4', personId:p3, title:'Level 6 Diploma in Beauty Therapy', awardingBody:'Example Awarding Body', provider:'Cork College of Beauty', awardDate:'2021-06-15', certNo:'CERT-90014', treatments:['Facials','Waxing','Eyelash extensions','Body massage'] });
+  d.qualifications[3].evidenceId = ev(p3, 'Qualification', 'QUA-4', 'diploma-scan.pdf', 'Pending');
+  d.insurance.push({ id:'INS-3', personId:p3, businessId:null, coverType:'Personal', insurer:'Example Insurance DAC', policyNo:'PL-771920', from:addDays(t, -30), to:addDays(addMonths(t, 12), -30), treatments:['Facials','Waxing','Eyelash extensions','Body massage'] });
+  d.insurance[2].evidenceId = ev(p3, 'Insurance', 'INS-3', 'insurance-cert.pdf', 'Pending');
+  d.applications.push({ id:'APP-A3', personId:p3, submitted:addDays(t, -2), status:'Pending', reviewer:'', decisionDate:'', decisionReason:'', duplicateOf:[] });
+  d.payments.push({ id:'PAY-4', personId:p3, linkType:'Application', linkId:'APP-A3', feeDue:50, currency:'EUR', amount:50, date:addDays(t, -2), providerRef:'demo_ch_7G8H9I', status:'Paid', refund:0, period:'', receipt:'RCT-1008', cardLast4:'4242' });
+  d.declarations.push({ id:'DEC-3', personId:p3, version:'DEC-0.1', items:DECLARATIONS.map(x => x[0]), agreedAt:addDays(t, -2), commsOptIn:false });
+
+  // P4: Sinéad, further evidence requested (insurance rejected)
+  const p4 = 'PER-SINEAD';
+  d.professionals.push({ id:p4, fullName:'Sinéad Kavanagh', email:'sinead.k@example.ie', phone:'083 000 1212', dob:'1993-08-30', address:'9 Station Road, Limerick', eircode:'V94 K2L3', category:'Nail technician', createdAt:addDays(t, -9) });
+  d.businesses.push({ id:'BUS-SK', name:'Polished by Sinéad', setting:'Mobile', address:'(private home address)', eircode:'V94 K2L3', town:'Limerick', publicLocation:'Limerick and Clare (mobile)', phone:'', email:'' });
+  d.workplaces.push({ id:'WP-5', personId:p4, businessId:'BUS-SK', employment:'Self-employed', start:'2023-01-10', end:'', current:true });
+  d.qualifications.push({ id:'QUA-5', personId:p4, title:'Award in Gel Polish Application', awardingBody:'Example Nail Academy', provider:'Example Nail Academy', awardDate:'2022-11-04', certNo:'', treatments:['Manicure','Gel and acrylic enhancements'] });
+  d.qualifications[4].evidenceId = ev(p4, 'Qualification', 'QUA-5', 'gel-award.png', 'Verified', ADMIN, addDays(t, -6));
+  d.insurance.push({ id:'INS-4', personId:p4, businessId:null, coverType:'Personal', insurer:'Example Mutual', policyNo:'PM-55601', from:addMonths(t, -13), to:addDays(t, -20), treatments:['Manicure','Gel and acrylic enhancements'] });
+  d.insurance[3].evidenceId = ev(p4, 'Insurance', 'INS-4', 'old-policy.pdf', 'Rejected', ADMIN, addDays(t, -6), 'Policy expired. Please upload your current insurance schedule.');
+  d.applications.push({ id:'APP-A4', personId:p4, submitted:addDays(t, -9), status:'Further evidence needed', reviewer:ADMIN, decisionDate:'', decisionReason:'Current insurance evidence required.', duplicateOf:[] });
+  d.payments.push({ id:'PAY-5', personId:p4, linkType:'Application', linkId:'APP-A4', feeDue:50, currency:'EUR', amount:50, date:addDays(t, -9), providerRef:'demo_ch_2J3K4L', status:'Paid', refund:0, period:'', receipt:'RCT-1006', cardLast4:'4242' });
+  d.declarations.push({ id:'DEC-4', personId:p4, version:'DEC-0.1', items:DECLARATIONS.map(x => x[0]), agreedAt:addDays(t, -9), commsOptIn:true });
+
+  d.audit.push(
+    { id:uid('AUD'), at:new Date(Date.now() - 6 * 864e5).toISOString(), actor:ADMIN, action:'Evidence rejected', entity:'APP-A4', detail:'Insurance: policy expired' },
+    { id:uid('AUD'), at:new Date(Date.now() - 6 * 864e5 - 6e5).toISOString(), actor:ADMIN, action:'Evidence verified', entity:'APP-A4', detail:'Qualification: Award in Gel Polish Application' },
+    { id:uid('AUD'), at:new Date(Date.now() - 30 * 864e5).toISOString(), actor:'System', action:'Registration renewed', entity:'IBNR-001001', detail:'New period recorded; registration number unchanged' });
+  d.audit.sort((a, b) => b.at.localeCompare(a.at));
+  d.notifications.push({ id:uid('NTF'), type:'Renewal reminder (60 days)', recipient:'roisin.h@example.ie', scheduled:addDays(t, -10), sent:addDays(t, -10), status:'Sent (demo)', link:'IBNR-001002' });
+  d.notifications.push({ id:uid('NTF'), type:'Insurance expiry reminder', recipient:'roisin.h@example.ie', scheduled:addDays(t, 10), sent:null, status:'Scheduled', link:'INS-2' });
+  return d;
+}
+
+/* ---------- derived data ---------- */
+const person = id => db.professionals.find(p => p.id === id);
+const appFor = pid => db.applications.filter(a => a.personId === pid).sort((a, b) => b.submitted.localeCompare(a.submitted))[0];
+const regFor = pid => db.registrations.find(r => r.personId === pid);
+const evidence = id => db.evidence.find(e => e.id === id);
+const curPeriod = r => r.periods[r.periods.length - 1];
+function refreshStatuses() {
+  db.registrations.forEach(r => {
+    if (r.status === 'Active' && curPeriod(r).end < today()) {
+      r.status = 'Expired';
+      r.statusHistory.push({ status:'Expired', at:today(), by:'System', reason:'Period ended without renewal' });
+      audit('System', 'Registration expired', r.regNo, 'Period end ' + curPeriod(r).end);
+    }
+  });
+}
+function verifiedTreatments(pid) {
+  const set = new Set();
+  db.qualifications.filter(q => q.personId === pid && evidence(q.evidenceId)?.status === 'Verified').forEach(q => q.treatments.forEach(t => set.add(t)));
+  return [...set];
+}
+function personEvidence(pid) { return db.evidence.filter(e => e.personId === pid); }
+function findDuplicates(p) {
+  return db.professionals.filter(o => o.id !== p.id && (
+    o.email.toLowerCase() === p.email.toLowerCase() ||
+    (o.fullName.toLowerCase() === p.fullName.toLowerCase() && o.dob === p.dob))).map(o => o.id);
+}
+
+/* ---------- navigation ---------- */
+const NAV = [
+  ['Demo', [['overview', 'Overview']]],
+  ['Applicant', [['apply', 'Apply'], ['account', 'My account']]],
+  ['Administrator', [['queue', 'Review queue'], ['register', 'Registrations'], ['audit', 'Audit and notices'], ['settings', 'Settings']]],
+  ['Public', [['public', 'Search the register']]],
+];
+function renderNav() {
+  $('#nav').innerHTML = NAV.map(([g, tabs]) => `<div class="tab-group"><span>${g}</span>${tabs.map(([v, l]) =>
+    `<button class="tab" data-act="go" data-view="${v}" ${isView(v) ? 'aria-current="page"' : ''}>${l}</button>`).join('')}</div>`).join('');
+  const current = NAV.flatMap(g => g[1]).find(([v]) => isView(v));
+  $('#menu-label').textContent = current ? current[1] : 'Menu';
+  $('header.top').classList.toggle('open', !!ui.menuOpen);
+  $('#menu-btn').setAttribute('aria-expanded', ui.menuOpen ? 'true' : 'false');
+}
+const isView = v => ui.view === v || (v === 'queue' && ui.view === 'review');
+function go(v, extra = {}) { Object.assign(ui, { view:v, flash:null, menuOpen:false }, extra); render(); $('#app').focus({ preventScroll:true }); window.scrollTo(0, 0); }
+
+/* On phones, tables become stacked cards; each cell gets its column name as a label. */
+function labelTables(root) {
+  root.querySelectorAll('table.stack').forEach(t => {
+    const heads = [...t.querySelectorAll('thead th')].map(th => th.textContent.trim());
+    t.querySelectorAll('tbody tr').forEach(tr => [...tr.children].forEach((td, i) => { if (heads[i]) td.dataset.label = heads[i]; }));
+  });
+}
+
+function render() {
+  refreshStatuses(); save(); renderNav();
+  const views = { overview:vOverview, apply:vApply, account:vAccount, queue:vQueue, review:vReview, register:vRegister, audit:vAudit, settings:vSettings, public:vPublic };
+  $('#app').innerHTML = (ui.flash ? `<div class="flash" role="status">${esc(ui.flash)}</div>` : '') + (views[ui.view] || vOverview)();
+  labelTables($('#app'));
+}
+
+/* ============================================================
+   VIEW: Overview
+   ============================================================ */
+function vOverview() {
+  const pend = db.applications.filter(a => ['Pending', 'Under review', 'Further evidence needed'].includes(a.status)).length;
+  const active = db.registrations.filter(r => r.status === 'Active').length;
+  const due = db.registrations.filter(r => r.status === 'Active' && daysUntil(curPeriod(r).end) <= 60).length;
+  const paid = db.payments.filter(p => p.status === 'Paid').reduce((s, p) => s + p.amount - (p.refund || 0), 0);
+  return `
+  <div class="card">
+    <h1>How the register works</h1>
+    <p class="muted">A professional fills in their details, pays the fee, and their application goes to an administrator for review. Paying does not approve anyone. A person is only registered after an administrator has checked their evidence and recorded a decision.</p>
+    <div class="row" style="margin-top:.75rem">
+      <button class="btn primary" data-act="go" data-view="apply">Start a new application</button>
+      <button class="btn" data-act="go" data-view="queue">Open the review queue</button>
+      <button class="btn" data-act="go" data-view="public">Search the public register</button>
+    </div>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><b>${pend}</b><span>Applications awaiting a decision</span></div>
+    <div class="kpi"><b>${active}</b><span>Active registrations</span></div>
+    <div class="kpi"><b>${due}</b><span>Renewals due in 60 days</span></div>
+    <div class="kpi"><b>${money(paid)}</b><span>Fees collected (demo)</span></div>
+  </div>
+  <div class="grid g2">
+    <div class="card">
+      <h2>The applicant's steps</h2>
+      <ol class="checklist">
+        <li><b>Personal details</b>: name, private contact details, correspondence address (Eircode lookup).</li>
+        <li><b>Workplaces</b>: one or more salons, home-based or mobile services. Each is a separate record, so changing salon keeps the same registration.</li>
+        <li><b>Qualifications</b>: each with its awarding body, certificate and uploaded evidence, plus the treatments it supports.</li>
+        <li><b>Additional training</b>: optional, and stored apart from the initial qualifications.</li>
+        <li><b>Insurance</b>: insurer, policy, cover dates, treatments covered, uploaded schedule.</li>
+        <li><b>Declarations</b>: the versioned declarations they agree to, with communication preferences kept separate.</li>
+        <li><b>Payment</b>: the ${money(db.settings.fee)} fee through a payment provider. Only the provider reference and status are stored, never card details.</li>
+        <li><b>Sent for review</b>: the application joins the administrator queue with status <i>Pending</i>.</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h2>What to look for in this demo</h2>
+      <p class="small muted">These are the six checks listed in the brief, with fictional records already loaded.</p>
+      <ul class="checklist">
+        <li>One person with two qualifications and two workplaces: <a href="#" data-act="open-app" data-id="APP-A1">Aoife Brennan</a></li>
+        <li>Paid but not approved, waiting in the queue: <a href="#" data-act="open-app" data-id="APP-A3">Ciara Doyle</a></li>
+        <li>Evidence review with a recorded decision and reason: <a href="#" data-act="open-app" data-id="APP-A4">Sinéad Kavanagh</a></li>
+        <li>Renewal that keeps the registration number: <a href="#" data-act="go" data-view="register">Registrations</a> (IBNR-001001 has two periods)</li>
+        <li>Restricted public search, with no private details shown: <a href="#" data-act="go" data-view="public">Public register</a></li>
+        <li>Audit record of an administrator changing a status: <a href="#" data-act="go" data-view="audit">Audit and notices</a></li>
+      </ul>
+      <div class="note">Records are saved in this browser only. Use <b>Settings, Reset demo data</b> to start again.</div>
+    </div>
+  </div>
+  ${vInstallCard()}`;
+}
+
+function vInstallCard() {
+  let embedded = true; try { embedded = window.self !== window.top; } catch (err) { /* cross-origin frame */ }
+  if (embedded) return '';
+  if (isStandalone()) return `<div class="card soft"><h2>Installed app</h2><p class="small">You're using the register as an installed app. It keeps working without an internet connection.</p></div>`;
+  return `<div class="card soft"><h2>Use it as an app on your computer or phone</h2>
+    <p class="small muted">The register works in any modern browser. You can also install it so it opens in its own window, gets a home-screen icon and works offline.</p>
+    <div class="grid g3 small">
+      <div><b>Windows or Mac</b><br>In Chrome or Edge, click <b>Install app</b> at the top of this page, or the install icon in the address bar.</div>
+      <div><b>Android</b><br>In Chrome, tap <b>Install app</b> above, or open the browser menu and choose <b>Add to Home screen</b>.</div>
+      <div><b>iPhone or iPad</b><br>In Safari, tap the <b>Share</b> button, then <b>Add to Home Screen</b>.</div>
+    </div></div>`;
+}
+const isStandalone = () => window.matchMedia?.('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+/* ============================================================
+   VIEW: Apply (wizard)
+   ============================================================ */
+const STEPS = ['Personal details', 'Workplaces', 'Qualifications', 'Additional training', 'Insurance', 'Declarations', 'Review and pay'];
+
+function vApply() {
+  if (ui.confirm) return vConfirm();
+  const s = ui.step;
+  const body = [stepPersonal, stepWorkplaces, stepQualifications, stepTraining, stepInsurance, stepDeclarations, stepPay][s]();
+  return `
+  <div class="row between" style="margin-bottom:.5rem"><h1>Apply to join the register</h1>
+    <button class="btn small" data-act="clear-draft">Clear form</button></div>
+  <ol class="steps" aria-label="Progress">${STEPS.map((l, i) => `<li class="${i < s ? 'done' : i === s ? 'now' : ''}" ${i === s ? 'aria-current="step"' : ''}>${l}</li>`).join('')}</ol>
+  <p class="step-label" aria-hidden="true">Step ${s + 1} of ${STEPS.length}: ${STEPS[s]}</p>
+  ${body}`;
+}
+
+function field(name, label, val, opts = {}) {
+  const { type = 'text', req = true, hint = '', attrs = '' } = opts;
+  return `<div class="${opts.cls || ''}"><label for="f-${name}">${label}${req ? '' : ' <span class="opt">(optional)</span>'}</label>
+    <input id="f-${name}" name="${name}" type="${type}" value="${esc(val)}" ${req ? 'required' : ''} ${attrs}>${hint ? `<div class="hint">${hint}</div>` : ''}</div>`;
+}
+function selectField(name, label, list, val, opts = {}) {
+  return `<div class="${opts.cls || ''}"><label for="f-${name}">${label}</label><select id="f-${name}" name="${name}" required>
+    <option value="">Choose…</option>${list.map(o => `<option ${o === val ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select></div>`;
+}
+function treatmentChecks(name, selected = []) {
+  return `<div class="checks">${TREATMENTS.map(t => `<label><input type="checkbox" name="${name}" value="${esc(t)}" ${selected.includes(t) ? 'checked' : ''}> ${esc(t)}</label>`).join('')}</div>`;
+}
+function fileField(key, label) {
+  const f = pendingFiles[key];
+  return `<div><label for="file-${key}">${label}</label><input id="file-${key}" type="file" data-file="${key}" accept=".pdf,.jpg,.jpeg,.png">
+    <div class="hint" id="filehint-${key}">${f ? `Selected: ${esc(f.name)} (${fmtSize(f.size)})` : 'PDF, JPG or PNG, up to 10 MB. Stored privately; never shown publicly.'}</div></div>`;
+}
+function eircodeRow(prefix, eir) {
+  return `<div><label for="f-${prefix}eircode">Eircode</label><div class="row" style="flex-wrap:nowrap">
+    <input id="f-${prefix}eircode" name="eircode" type="text" value="${esc(eir)}" required placeholder="e.g. H91 K7P2" style="text-transform:uppercase">
+    <button type="button" class="btn" data-act="lookup">Find address</button></div>
+    <div class="hint">Address lookup is simulated in this demo.</div></div>`;
+}
+const navButtons = (nextLabel = 'Continue') => `<div class="row between" style="margin-top:1rem">
+  ${ui.step > 0 ? '<button type="button" class="btn" data-act="back">Back</button>' : '<span></span>'}
+  <button type="button" class="btn primary" data-act="next">${nextLabel}</button></div>`;
+
+function stepPersonal() {
+  const p = draft.person;
+  return `<form class="card" data-form="personal" novalidate>
+    <h2>Your details</h2><p class="small muted">Your contact details and address are private. They are never shown on the public register.</p>
+    <div class="err" role="alert"></div>
+    <div class="grid g2">
+      ${field('fullName', 'Full name', p.fullName, { attrs:'autocomplete="name"' })}
+      ${field('dob', 'Date of birth', p.dob, { type:'date' })}
+      ${field('email', 'Personal email', p.email, { type:'email', attrs:'autocomplete="email"' })}
+      ${field('phone', 'Phone number', p.phone, { type:'tel', attrs:'autocomplete="tel"' })}
+      ${selectField('category', 'Professional category', CATEGORIES, p.category)}
+      ${eircodeRow('p-', p.eircode)}
+      <div class="span2"><label for="f-address">Correspondence address</label><textarea id="f-address" name="address" required>${esc(p.address)}</textarea></div>
+    </div>
+    ${navButtons()}
+  </form>`;
+}
+
+function stepWorkplaces() {
+  return `<div class="card">
+    <h2>Where you work</h2><p class="small muted">Add every salon or business you work at, including home-based or mobile services. If you work from home or travel to clients, only your town or service area is shown publicly.</p>
+    <div class="items">${draft.workplaces.length ? draft.workplaces.map((w, i) => `<div class="item"><div><b>${esc(w.name)}</b> <span class="badge b-brand">${esc(w.setting)}</span>
+      <div class="meta">${esc(w.employment)} since ${fmtDate(w.start)}${w.current ? ' (current)' : ' to ' + fmtDate(w.end)}<br>Public location: ${esc(w.publicLocation)}</div></div>
+      <button class="btn small danger" data-act="remove" data-list="workplaces" data-i="${i}">Remove</button></div>`).join('') : '<p class="empty">No workplaces added yet.</p>'}</div>
+    <form class="card soft" data-form="workplace" novalidate>
+      <h3>Add a workplace</h3><div class="err" role="alert"></div>
+      <div class="grid g2">
+        ${field('name', 'Business or salon name', '')}
+        ${selectField('setting', 'Setting', SETTINGS_LIST, '')}
+        ${selectField('employment', 'Your role', EMPLOYMENT, '')}
+        ${field('start', 'Start date', '', { type:'date' })}
+        ${eircodeRow('w-', '')}
+        ${field('town', 'Town', '')}
+        <div class="span2"><label for="f-waddress">Business address</label><textarea id="f-waddress" name="address" required></textarea>
+          <div class="hint">For home-based work this stays private.</div></div>
+        ${field('publicLocation', 'Location to show publicly', '', { hint:'For example "Cork city", or a service area such as "Limerick and Clare (mobile)".' })}
+        ${field('phone', 'Business phone', '', { type:'tel', req:false })}
+        <label class="check span2"><input type="checkbox" name="current" checked> I currently work here</label>
+        ${field('end', 'End date', '', { type:'date', req:false, hint:'Only if you no longer work here.' })}
+      </div>
+      <div class="row end" style="margin-top:.75rem"><button type="button" class="btn" data-act="add" data-list="workplace">Add workplace</button></div>
+    </form>
+    ${navButtons()}
+  </div>`;
+}
+
+function stepQualifications() {
+  return `<div class="card">
+    <h2>Qualifications</h2><p class="small muted">Add each qualification separately with a copy of the certificate, and tick the treatments it covers. An administrator checks each one.</p>
+    <div class="items">${draft.qualifications.length ? draft.qualifications.map((q, i) => `<div class="item"><div><b>${esc(q.title)}</b>
+      <div class="meta">${esc(q.awardingBody)}, ${fmtDate(q.awardDate)} · ${esc(q.provider)}${q.certNo ? ' · Cert ' + esc(q.certNo) : ''}<br>
+      Treatments: ${esc(q.treatments.join(', '))}<br>Evidence: ${esc(q.file.name)}</div></div>
+      <button class="btn small danger" data-act="remove" data-list="qualifications" data-i="${i}">Remove</button></div>`).join('') : '<p class="empty">No qualifications added yet.</p>'}</div>
+    <form class="card soft" data-form="qualification" novalidate>
+      <h3>Add a qualification</h3><div class="err" role="alert"></div>
+      <div class="grid g2">
+        ${field('title', 'Qualification title', '')}
+        ${field('awardingBody', 'Awarding body', '')}
+        ${field('provider', 'Training provider', '')}
+        ${field('awardDate', 'Date awarded', '', { type:'date' })}
+        ${field('certNo', 'Certificate number', '', { req:false })}
+        ${fileField('qual', 'Certificate or transcript')}
+        <div class="span2"><label>Treatments this qualification covers</label>${treatmentChecks('treatments')}</div>
+      </div>
+      <div class="row end" style="margin-top:.75rem"><button type="button" class="btn" data-act="add" data-list="qualification">Add qualification</button></div>
+    </form>
+    ${navButtons()}
+  </div>`;
+}
+
+function stepTraining() {
+  return `<div class="card">
+    <h2>Additional training <span class="opt muted small">(optional)</span></h2><p class="small muted">Short courses and continuing professional development. These are kept separate from your main qualifications.</p>
+    <div class="items">${draft.training.length ? draft.training.map((t, i) => `<div class="item"><div><b>${esc(t.title)}</b>
+      <div class="meta">${esc(t.provider)}, completed ${fmtDate(t.completed)} · ${esc(t.treatment)}<br>Evidence: ${esc(t.file.name)}</div></div>
+      <button class="btn small danger" data-act="remove" data-list="training" data-i="${i}">Remove</button></div>`).join('') : '<p class="empty">No additional training added. You can skip this step.</p>'}</div>
+    <form class="card soft" data-form="training" novalidate>
+      <h3>Add training</h3><div class="err" role="alert"></div>
+      <div class="grid g2">
+        ${field('title', 'Course title', '')}
+        ${field('provider', 'Provider', '')}
+        ${field('completed', 'Completion date', '', { type:'date' })}
+        ${selectField('treatment', 'Related treatment', TREATMENTS, '')}
+        ${fileField('train', 'Certificate of completion')}
+      </div>
+      <div class="row end" style="margin-top:.75rem"><button type="button" class="btn" data-act="add" data-list="training">Add training</button></div>
+    </form>
+    ${navButtons(draft.training.length ? 'Continue' : 'Skip and continue')}
+  </div>`;
+}
+
+function stepInsurance() {
+  const bizOpts = draft.workplaces.map(w => w.name);
+  return `<div class="card">
+    <h2>Insurance</h2><p class="small muted">Add the insurance that covers your work. This can be your own policy or a policy held by a business you work at.</p>
+    <div class="items">${draft.insurance.length ? draft.insurance.map((x, i) => `<div class="item"><div><b>${esc(x.insurer)}</b> <span class="badge b-brand">${esc(x.coverType)}${x.business ? ': ' + esc(x.business) : ''}</span>
+      <div class="meta">Policy ${esc(x.policyNo)} · ${fmtDate(x.from)} to ${fmtDate(x.to)}<br>Covers: ${esc(x.treatments.join(', '))}<br>Evidence: ${esc(x.file.name)}</div></div>
+      <button class="btn small danger" data-act="remove" data-list="insurance" data-i="${i}">Remove</button></div>`).join('') : '<p class="empty">No insurance added yet.</p>'}</div>
+    <form class="card soft" data-form="insurance" novalidate>
+      <h3>Add insurance</h3><div class="err" role="alert"></div>
+      <div class="grid g2">
+        ${selectField('coverType', 'Whose policy is it?', ['Personal', 'Business'], '')}
+        <div><label for="f-business">Business covered <span class="opt">(business policies)</span></label><select id="f-business" name="business"><option value="">Not applicable</option>${bizOpts.map(b => `<option>${esc(b)}</option>`).join('')}</select></div>
+        ${field('insurer', 'Insurer', '')}
+        ${field('policyNo', 'Policy number', '')}
+        ${field('from', 'Cover starts', '', { type:'date' })}
+        ${field('to', 'Cover ends', '', { type:'date' })}
+        ${fileField('ins', 'Insurance schedule or certificate')}
+        <div class="span2"><label>Treatments covered</label>${treatmentChecks('treatments')}</div>
+      </div>
+      <div class="row end" style="margin-top:.75rem"><button type="button" class="btn" data-act="add" data-list="insurance">Add insurance</button></div>
+    </form>
+    ${navButtons()}
+  </div>`;
+}
+
+function stepDeclarations() {
+  const d = draft.decl;
+  return `<form class="card" data-form="declarations" novalidate>
+    <h2>Declarations</h2><p class="small muted">Declaration version ${esc(db.settings.declarationVersion)}. We record the version and the date you agreed.</p>
+    <div class="err" role="alert"></div>
+    ${DECLARATIONS.map(([k, t]) => `<label class="check" style="margin-bottom:.6rem"><input type="checkbox" name="${k}" ${d[k] ? 'checked' : ''}> <span>${esc(t)}</span></label>`).join('')}
+    <hr style="border:0;border-top:1px solid var(--line);margin:1rem 0">
+    <h3>Communication preferences <span class="opt muted small">(optional)</span></h3>
+    <label class="check"><input type="checkbox" name="commsOptIn" ${d.commsOptIn ? 'checked' : ''}> <span>Send me news about the Register and training events. This is separate from service messages such as renewal reminders.</span></label>
+    ${navButtons()}
+  </form>`;
+}
+
+function stepPay() {
+  const p = draft.person, s = db.settings;
+  const sec = (title, step, html) => `<div class="section-title"><h3>${title}</h3><button class="btn small" data-act="jump" data-step="${step}">Edit</button></div>${html}`;
+  return `<div class="split">
+    <div class="card">
+      <h2>Check your application</h2>
+      ${sec('Personal details', 0, `<dl class="kv"><dt>Name</dt><dd>${esc(p.fullName)}</dd><dt>Date of birth</dt><dd>${fmtDate(p.dob)}</dd><dt>Email</dt><dd>${esc(p.email)}</dd><dt>Phone</dt><dd>${esc(p.phone)}</dd><dt>Category</dt><dd>${esc(p.category)}</dd><dt>Address</dt><dd>${esc(p.address)}, ${esc(p.eircode)}</dd></dl>`)}
+      ${sec('Workplaces', 1, draft.workplaces.map(w => `<p>${esc(w.name)} <span class="muted small">(${esc(w.setting)}, ${esc(w.employment)}, public location: ${esc(w.publicLocation)})</span></p>`).join(''))}
+      ${sec('Qualifications', 2, draft.qualifications.map(q => `<p>${esc(q.title)} <span class="muted small">(${esc(q.awardingBody)}; ${q.treatments.length} treatments; ${esc(q.file.name)})</span></p>`).join(''))}
+      ${sec('Additional training', 3, draft.training.length ? draft.training.map(t => `<p>${esc(t.title)} <span class="muted small">(${esc(t.provider)})</span></p>`).join('') : '<p class="empty">None</p>')}
+      ${sec('Insurance', 4, draft.insurance.map(x => `<p>${esc(x.insurer)}, ${esc(x.policyNo)} <span class="muted small">(to ${fmtDate(x.to)})</span></p>`).join(''))}
+      ${sec('Declarations', 5, `<p class="small">All ${DECLARATIONS.length} declarations agreed (version ${esc(s.declarationVersion)}). News and events: ${draft.decl.commsOptIn ? 'yes' : 'no'}.</p>`)}
+    </div>
+    <form class="card sticky" data-form="pay" novalidate>
+      <h2>Pay the registration fee</h2>
+      <dl class="kv" style="margin-bottom:.75rem"><dt>Annual fee</dt><dd><b>${money(s.fee, s.currency)}</b></dd><dt>Covers</dt><dd>${s.periodMonths} months from approval</dd></dl>
+      <div class="note">Paying sends your application for review. It does <b>not</b> approve your registration.</div>
+      <div class="err" role="alert"></div>
+      <div class="paybox">
+        <div class="small muted" style="margin-bottom:.5rem">Demo payment provider (test mode). In the live system this would be the provider's own secure form.</div>
+        <div class="grid">
+          ${field('cardName', 'Name on card', p.fullName, { attrs:'autocomplete="off"' })}
+          ${field('cardNo', 'Card number', '', { attrs:'inputmode="numeric" autocomplete="off" placeholder="4242 4242 4242 4242"', hint:'Test cards: 4242 4242 4242 4242 succeeds; 4000 0000 0000 0002 is declined.' })}
+          <div class="grid g2">${field('exp', 'Expiry (MM/YY)', '', { attrs:'autocomplete="off" placeholder="12/29"' })}${field('cvc', 'CVC', '', { attrs:'inputmode="numeric" autocomplete="off" placeholder="123"' })}</div>
+        </div>
+      </div>
+      <div class="row between" style="margin-top:1rem"><button type="button" class="btn" data-act="back">Back</button>
+        <button type="button" class="btn primary" data-act="pay">Pay ${money(s.fee, s.currency)} and submit</button></div>
+      <p class="hint" style="margin-top:.6rem">Card details go to the payment provider only. The Register stores the payment reference and status.</p>
+    </form>
+  </div>`;
+}
+
+function vConfirm() {
+  const c = ui.confirm;
+  return `<div class="card" style="max-width:720px;margin:0 auto">
+    <h1>Your application has been sent for review</h1>
+    <p>Thank you, ${esc(c.name)}. We have received your payment and your details are now with our review team.</p>
+    <dl class="kv" style="margin:1rem 0"><dt>Application ID</dt><dd class="mono">${esc(c.appId)}</dd><dt>Status</dt><dd>${badge('Pending')}</dd>
+      <dt>Payment</dt><dd>${money(c.amount)} ${badge('Paid')}</dd><dt>Receipt</dt><dd class="mono">${esc(c.receipt)}</dd><dt>Provider reference</dt><dd class="mono">${esc(c.ref)}</dd></dl>
+    <div class="note">An administrator will check your qualifications and insurance. We will email you if we need anything else. Your registration number is issued only when your application is approved.</div>
+    ${c.duplicate ? '<div class="err">This application matches an existing record and has been flagged for the review team to check.</div>' : ''}
+    <div class="row" style="margin-top:1rem">
+      <button class="btn primary" data-act="my" data-id="${esc(c.personId)}">View my account</button>
+      <button class="btn" data-act="open-app" data-id="${esc(c.appId)}">See it as the reviewer</button>
+      <button class="btn" data-act="new-app">Start another application</button>
+    </div></div>`;
+}
+
+/* ---------- wizard logic ---------- */
+const required = (fd, keys) => keys.filter(k => !String(fd.get(k) || '').trim());
+const LABELS = { fullName:'Full name', dob:'Date of birth', email:'Email', phone:'Phone', category:'Category', eircode:'Eircode', address:'Address',
+  name:'Business name', setting:'Setting', employment:'Role', start:'Start date', town:'Town', publicLocation:'Public location',
+  title:'Title', awardingBody:'Awarding body', provider:'Provider', awardDate:'Date awarded', completed:'Completion date', treatment:'Treatment',
+  coverType:'Whose policy', insurer:'Insurer', policyNo:'Policy number', from:'Cover starts', to:'Cover ends',
+  cardName:'Name on card', cardNo:'Card number', exp:'Expiry', cvc:'CVC' };
+function showErr(form, errs) {
+  const box = form.querySelector('.err');
+  box.innerHTML = errs.length ? (errs.length === 1 ? esc(errs[0]) : '<ul style="margin:0;padding-left:1.1rem">' + errs.map(e => `<li>${esc(e)}</li>`).join('') + '</ul>') : '';
+  form.querySelectorAll('[aria-invalid]').forEach(el => el.removeAttribute('aria-invalid'));
+  if (errs.length) box.scrollIntoView({ block:'nearest', behavior:'smooth' });
+  return errs.length === 0;
+}
+const missing = (fd, keys) => required(fd, keys).map(k => `${LABELS[k] || k} is required.`);
+
+function readPersonal(form) {
+  const fd = new FormData(form);
+  const errs = missing(fd, ['fullName', 'dob', 'email', 'phone', 'category', 'eircode', 'address']);
+  const email = String(fd.get('email') || '').trim();
+  if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) errs.push('Enter a valid email address.');
+  if (fd.get('eircode') && !EIRCODE.test(normEir(fd.get('eircode')))) errs.push('Enter a valid Eircode, for example H91 K7P2.');
+  if (fd.get('dob') && fd.get('dob') > addMonths(today(), -192)) errs.push('Applicants must be at least 16 years old.');
+  if (!showErr(form, errs)) return false;
+  draft.person = { fullName:fd.get('fullName').trim(), dob:fd.get('dob'), email, phone:fd.get('phone').trim(), category:fd.get('category'), eircode:fmtEir(fd.get('eircode')), address:fd.get('address').trim() };
+  saveDraft(); return true;
+}
+
+function addItem(kind, form) {
+  const fd = new FormData(form);
+  let errs = [], item;
+  if (kind === 'workplace') {
+    errs = missing(fd, ['name', 'setting', 'employment', 'start', 'eircode', 'town', 'address', 'publicLocation']);
+    if (fd.get('eircode') && !EIRCODE.test(normEir(fd.get('eircode')))) errs.push('Enter a valid Eircode.');
+    const current = !!fd.get('current');
+    if (!current && !fd.get('end')) errs.push('Add an end date, or tick "I currently work here".');
+    if (fd.get('end') && fd.get('end') < fd.get('start')) errs.push('End date must be after the start date.');
+    item = { name:fd.get('name').trim(), setting:fd.get('setting'), employment:fd.get('employment'), start:fd.get('start'), end:current ? '' : fd.get('end'), current,
+      eircode:fmtEir(fd.get('eircode')), town:String(fd.get('town')).trim(), address:String(fd.get('address')).trim(), publicLocation:String(fd.get('publicLocation')).trim(), phone:String(fd.get('phone') || '').trim() };
+    if (!showErr(form, errs)) return;
+    draft.workplaces.push(item);
+  } else if (kind === 'qualification') {
+    errs = missing(fd, ['title', 'awardingBody', 'provider', 'awardDate']);
+    const tr = fd.getAll('treatments');
+    if (!tr.length) errs.push('Tick at least one treatment this qualification covers.');
+    if (!pendingFiles.qual) errs.push('Upload a copy of the certificate.');
+    if (fd.get('awardDate') > today()) errs.push('Date awarded cannot be in the future.');
+    if (!showErr(form, errs)) return;
+    draft.qualifications.push({ title:fd.get('title').trim(), awardingBody:fd.get('awardingBody').trim(), provider:fd.get('provider').trim(), awardDate:fd.get('awardDate'), certNo:String(fd.get('certNo') || '').trim(), treatments:tr, file:pendingFiles.qual });
+    delete pendingFiles.qual;
+  } else if (kind === 'training') {
+    errs = missing(fd, ['title', 'provider', 'completed', 'treatment']);
+    if (!pendingFiles.train) errs.push('Upload a certificate of completion.');
+    if (!showErr(form, errs)) return;
+    draft.training.push({ title:fd.get('title').trim(), provider:fd.get('provider').trim(), completed:fd.get('completed'), treatment:fd.get('treatment'), file:pendingFiles.train });
+    delete pendingFiles.train;
+  } else if (kind === 'insurance') {
+    errs = missing(fd, ['coverType', 'insurer', 'policyNo', 'from', 'to']);
+    const tr = fd.getAll('treatments');
+    if (!tr.length) errs.push('Tick at least one treatment the policy covers.');
+    if (fd.get('coverType') === 'Business' && !fd.get('business')) errs.push('Choose which business the policy covers.');
+    if (fd.get('to') && fd.get('to') < today()) errs.push('This policy has already expired. Add your current policy.');
+    if (fd.get('from') && fd.get('to') && fd.get('to') <= fd.get('from')) errs.push('Cover end must be after cover start.');
+    if (!pendingFiles.ins) errs.push('Upload your insurance schedule or certificate.');
+    if (!showErr(form, errs)) return;
+    draft.insurance.push({ coverType:fd.get('coverType'), business:fd.get('coverType') === 'Business' ? fd.get('business') : '', insurer:fd.get('insurer').trim(), policyNo:fd.get('policyNo').trim(), from:fd.get('from'), to:fd.get('to'), treatments:tr, file:pendingFiles.ins });
+    delete pendingFiles.ins;
+  }
+  saveDraft(); render();
+}
+
+function stepNext() {
+  const s = ui.step;
+  const fail = msg => { const box = $('#app .err'); if (box) { box.textContent = msg; box.scrollIntoView({ block:'nearest' }); } };
+  if (s === 0 && !readPersonal($('[data-form=personal]'))) return;
+  if (s === 1 && !draft.workplaces.length) return fail('Add at least one workplace before continuing.');
+  if (s === 2 && !draft.qualifications.length) return fail('Add at least one qualification before continuing.');
+  if (s === 4 && !draft.insurance.length) return fail('Add your insurance before continuing.');
+  if (s === 5) {
+    const form = $('[data-form=declarations]'), fd = new FormData(form);
+    const miss = DECLARATIONS.filter(([k]) => !fd.get(k));
+    if (!showErr(form, miss.length ? ['Please agree to all declarations to continue.'] : [])) return;
+    draft.decl = Object.fromEntries(DECLARATIONS.map(([k]) => [k, true])); draft.decl.commsOptIn = !!fd.get('commsOptIn');
+    saveDraft();
+  }
+  ui.step = Math.min(s + 1, STEPS.length - 1); render(); window.scrollTo(0, 0);
+}
+
+/* ---------- payment + submission ---------- */
+function pay() {
+  const form = $('[data-form=pay]'), fd = new FormData(form);
+  const s = db.settings;
+  const errs = missing(fd, ['cardName', 'cardNo', 'exp', 'cvc']);
+  const num = String(fd.get('cardNo') || '').replace(/\D/g, '');
+  if (num && num.length < 15) errs.push('Enter the full card number.');
+  if (fd.get('exp') && !/^(0[1-9]|1[0-2])\/\d{2}$/.test(String(fd.get('exp')).trim())) errs.push('Enter the expiry as MM/YY.');
+  if (fd.get('cvc') && !/^\d{3,4}$/.test(String(fd.get('cvc')).trim())) errs.push('Enter the 3 or 4 digit CVC.');
+  if (!draft.person.fullName || !draft.workplaces.length || !draft.qualifications.length || !draft.insurance.length || !draft.decl.accurate)
+    errs.push('Some earlier steps are incomplete. Use Edit to finish them.');
+  if (!showErr(form, errs)) return;
+  if (num === '4000000000000002') {
+    audit('Payment provider', 'Payment failed', draft.person.email, 'Card declined (demo test card)');
+    save();
+    return showErr(form, ['Your card was declined by the payment provider. No application was submitted. Try another card.']);
+  }
+  const btn = form.querySelector('[data-act=pay]'); btn.disabled = true; btn.textContent = 'Processing…';
+  setTimeout(() => submitApplication(num.slice(-4)), 700);
+}
+
+function submitApplication(last4) {
+  const s = db.settings, t = today(), dp = draft.person;
+  const pid = uid('PER');
+  const prof = { id:pid, ...dp, createdAt:t };
+  const dups = findDuplicates(prof);
+  db.professionals.push(prof);
+  draft.workplaces.forEach(w => {
+    const bid = uid('BUS');
+    db.businesses.push({ id:bid, name:w.name, setting:w.setting, address:w.setting === 'Salon' ? w.address : '(private home address)', privateAddress:w.address, eircode:w.eircode, town:w.town, publicLocation:w.publicLocation, phone:w.phone, email:'' });
+    db.workplaces.push({ id:uid('WP'), personId:pid, businessId:bid, employment:w.employment, start:w.start, end:w.end, current:w.current });
+    w._bid = bid;
+  });
+  const mkEv = (kind, refId, file) => { const id = uid('EV'); db.evidence.push({ id, personId:pid, kind, refId, fileName:file.name, fileSize:file.size, status:'Pending', history:[{ status:'Pending', by:'Applicant', at:t, reason:'Uploaded' }] }); return id; };
+  draft.qualifications.forEach(q => { const id = uid('QUA'); db.qualifications.push({ id, personId:pid, title:q.title, awardingBody:q.awardingBody, provider:q.provider, awardDate:q.awardDate, certNo:q.certNo, treatments:q.treatments, evidenceId:mkEv('Qualification', id, q.file) }); });
+  draft.training.forEach(x => { const id = uid('TRN'); db.training.push({ id, personId:pid, title:x.title, provider:x.provider, completed:x.completed, treatment:x.treatment, evidenceId:mkEv('Training', id, x.file) }); });
+  draft.insurance.forEach(x => { const id = uid('INS'); const biz = draft.workplaces.find(w => w.name === x.business);
+    db.insurance.push({ id, personId:pid, businessId:biz ? biz._bid : null, coverType:x.coverType, insurer:x.insurer, policyNo:x.policyNo, from:x.from, to:x.to, treatments:x.treatments, evidenceId:mkEv('Insurance', id, x.file) }); });
+  db.declarations.push({ id:uid('DEC'), personId:pid, version:s.declarationVersion, items:DECLARATIONS.map(d => d[0]), agreedAt:t, commsOptIn:!!draft.decl.commsOptIn });
+  const appId = uid('APP');
+  db.applications.push({ id:appId, personId:pid, submitted:t, status:'Pending', reviewer:'', decisionDate:'', decisionReason:'', duplicateOf:dups });
+  const receipt = 'RCT-' + (1000 + db.payments.length + 10), ref = 'demo_ch_' + Math.random().toString(36).slice(2, 10);
+  db.payments.push({ id:uid('PAY'), personId:pid, linkType:'Application', linkId:appId, feeDue:s.fee, currency:s.currency, amount:s.fee, date:t, providerRef:ref, status:'Paid', refund:0, period:'', receipt, cardLast4:last4 });
+  audit('Applicant', 'Application submitted', appId, `${dp.fullName}; fee ${money(s.fee)} paid (${ref})`);
+  if (dups.length) audit('System', 'Possible duplicate flagged', appId, 'Matches ' + dups.join(', '));
+  notify('Payment receipt and application received', dp.email, appId);
+  notify('New application in review queue', 'Review team', appId);
+  ui.confirm = { appId, personId:pid, name:dp.fullName, amount:s.fee, receipt, ref, duplicate:dups.length > 0 };
+  draft = blankDraft(); saveDraft(); ui.step = 0;
+  render(); window.scrollTo(0, 0);
+}
+
+/* ============================================================
+   VIEW: My account (applicant portal)
+   ============================================================ */
+function vAccount() {
+  const list = db.professionals;
+  const pid = ui.myId && person(ui.myId) ? ui.myId : list[list.length - 1]?.id;
+  const p = person(pid);
+  const picker = `<div class="row" style="margin-bottom:1rem"><label for="who" style="margin:0">Viewing the portal as</label>
+    <select id="who" data-act="pick-me" style="width:auto">${list.map(x => `<option value="${x.id}" ${x.id === pid ? 'selected' : ''}>${esc(x.fullName)}</option>`).join('')}</select>
+    <span class="hint">Demo only: in the live system each person signs in to see their own records.</span></div>`;
+  if (!p) return picker + '<p class="empty">No accounts yet.</p>';
+  const app = appFor(pid), reg = regFor(pid), pays = db.payments.filter(x => x.personId === pid);
+  const evs = personEvidence(pid);
+  const label = e => { const src = { Qualification:db.qualifications, Training:db.training, Insurance:db.insurance }[e.kind].find(r => r.id === e.refId); return `${e.kind}: ${esc(src?.title || src?.insurer || '')}`; };
+  const period = reg ? curPeriod(reg) : null;
+  const renewDays = period ? daysUntil(period.end) : null;
+  return `${picker}
+  <div class="split">
+    <div>
+      <div class="card"><div class="row between"><h1>${esc(p.fullName)}</h1>${reg ? badge(reg.status) : app ? badge(app.status) : ''}</div>
+        ${reg ? `<dl class="kv"><dt>Registration number</dt><dd class="mono"><b>${esc(reg.regNo)}</b></dd><dt>Current period</dt><dd>${fmtDate(period.start)} to ${fmtDate(period.end)}</dd><dt>Renewal due</dt><dd>${fmtDate(period.end)} ${renewDays <= 60 && renewDays >= 0 ? `<span class="badge b-warn">in ${renewDays} days</span>` : ''}</dd></dl>`
+        : `<p>Your application <span class="mono">${esc(app?.id)}</span> was submitted on ${fmtDate(app?.submitted)} and is <b>${esc(app?.status.toLowerCase())}</b>.</p>
+           ${app?.status === 'Declined' ? `<div class="err">Reason: ${esc(app.decisionReason)}</div>` : '<p class="small muted">Your registration number will appear here once an administrator approves your application.</p>'}`}
+        ${app?.status === 'Further evidence needed' ? `<div class="err"><b>We need more information.</b> ${esc(app.decisionReason)} Upload replacement evidence below.</div>` : ''}
+      </div>
+      <div class="card"><h2>Evidence</h2>
+        ${evs.map(e => `<div class="ev"><div class="row between"><div>${label(e)}<div class="small muted">${esc(e.fileName)}</div></div>${badge(e.status)}</div>
+          ${e.status === 'Rejected' ? `<div class="small" style="color:var(--bad);margin-top:.3rem">${esc(e.history[e.history.length - 1].reason)}</div>
+            <div class="row" style="margin-top:.4rem"><input type="file" data-file="re-${e.id}" accept=".pdf,.jpg,.jpeg,.png"><button class="btn small primary" data-act="resubmit" data-id="${e.id}">Upload replacement</button></div>` : ''}</div>`).join('')}
+      </div>
+      <div class="card"><h2>Workplaces</h2>
+        ${db.workplaces.filter(w => w.personId === pid).map(w => { const b = db.businesses.find(x => x.id === w.businessId); return `<p><b>${esc(b.name)}</b> <span class="badge b-brand">${esc(b.setting)}</span><br><span class="small muted">${esc(w.employment)} since ${fmtDate(w.start)}${w.current ? ', current' : ''} · public location: ${esc(b.publicLocation)}</span></p>`; }).join('')}
+        <p class="hint">Changing workplace updates these links only. Your registration number stays the same.</p></div>
+    </div>
+    <div>
+      ${reg && ['Active', 'Expired'].includes(reg.status) ? `<div class="card"><h2>Renew</h2><p class="small">Renewing adds a new ${db.settings.periodMonths}-month period to the same registration number, <span class="mono">${esc(reg.regNo)}</span>.</p>
+        <button class="btn primary" data-act="renew" data-reg="${esc(reg.regNo)}">Pay ${money(db.settings.fee)} and renew</button><p class="hint">Uses the demo test card.</p></div>` : ''}
+      <div class="card"><h2>Payments and receipts</h2>
+        ${pays.length ? `<div class="table-wrap"><table class="stack"><thead><tr><th>Date</th><th>For</th><th>Amount</th><th>Status</th></tr></thead><tbody>
+        ${pays.map(x => `<tr><td>${fmtDate(x.date)}</td><td>${esc(x.linkType)}<div class="small muted mono">${esc(x.receipt)}</div></td><td>${money(x.amount, x.currency)}</td><td>${badge(x.status)}</td></tr>`).join('')}</tbody></table></div>` : '<p class="empty">No payments.</p>'}
+      </div>
+      <div class="card"><h2>Contact details</h2><p class="small muted">Private. Only you and authorised staff can see these.</p>
+        <dl class="kv"><dt>Email</dt><dd>${esc(p.email)}</dd><dt>Phone</dt><dd>${esc(p.phone)}</dd><dt>Address</dt><dd>${esc(p.address)}</dd></dl></div>
+    </div>
+  </div>`;
+}
+
+function resubmit(evId) {
+  const f = pendingFiles['re-' + evId];
+  if (!f) { alertInline('Choose a file first.'); return; }
+  const e = evidence(evId);
+  e.fileName = f.name; e.fileSize = f.size; e.status = 'Pending';
+  e.history.push({ status:'Pending', by:'Applicant', at:today(), reason:'Replacement evidence uploaded' });
+  delete pendingFiles['re-' + evId];
+  const app = appFor(e.personId);
+  if (app && app.status === 'Further evidence needed') app.status = 'Under review';
+  audit('Applicant', 'Replacement evidence uploaded', app?.id || e.personId, `${e.kind}: ${f.name}`);
+  notify('Applicant uploaded new evidence', 'Review team', app?.id);
+  ui.flash = 'Thanks. Your new evidence has been sent for review.'; render();
+}
+
+function renew(regNo) {
+  const r = db.registrations.find(x => x.regNo === regNo), s = db.settings, cur = curPeriod(r);
+  const start = cur.end >= today() ? addDays(cur.end, 1) : today();
+  const end = addDays(addMonths(start, s.periodMonths), -1);
+  const payId = uid('PAY'), ref = 'demo_ch_' + Math.random().toString(36).slice(2, 10);
+  db.payments.push({ id:payId, personId:r.personId, linkType:'Renewal', linkId:regNo, feeDue:s.fee, currency:s.currency, amount:s.fee, date:today(), providerRef:ref, status:'Paid', refund:0, period:`${start} to ${end}`, receipt:'RCT-' + (1000 + db.payments.length + 10), cardLast4:'4242' });
+  r.periods.push({ start, end, paymentId:payId });
+  if (r.status === 'Expired') { r.status = 'Active'; }
+  r.statusHistory.push({ status:'Active', at:today(), by:'System', reason:'Renewed: new period, same number' });
+  audit('Applicant', 'Registration renewed', regNo, `New period ${start} to ${end}; ${money(s.fee)} paid (${ref})`);
+  notify('Renewal receipt', person(r.personId).email, regNo);
+  ui.flash = `Renewed. ${regNo} now runs to ${fmtDate(end)}. Your registration number has not changed.`; render();
+}
+
+/* ============================================================
+   VIEW: Review queue (admin)
+   ============================================================ */
+function vQueue() {
+  const F = { open:['Pending', 'Under review', 'Further evidence needed'], all:null, Pending:['Pending'], 'Under review':['Under review'], 'Further evidence needed':['Further evidence needed'], Approved:['Approved'], Declined:['Declined'] };
+  const q = ui.q.toLowerCase();
+  const rows = db.applications.filter(a => !F[ui.filter] || F[ui.filter].includes(a.status))
+    .filter(a => { const p = person(a.personId); return !q || [p.fullName, p.email, a.id].join(' ').toLowerCase().includes(q); })
+    .sort((a, b) => b.submitted.localeCompare(a.submitted));
+  return `<div class="row between"><h1>Review queue</h1><span class="small muted">Signed in as ${ADMIN} · multi-factor sign-in (simulated)</span></div>
+  <div class="card">
+    <div class="row" style="margin-bottom:.75rem">
+      <select data-act="filter" style="width:auto" aria-label="Filter by status">${Object.keys(F).map(k => `<option value="${k}" ${ui.filter === k ? 'selected' : ''}>${k === 'open' ? 'Awaiting decision' : k === 'all' ? 'All applications' : k}</option>`).join('')}</select>
+      <input type="search" data-act="search" placeholder="Search name, email or application ID" value="${esc(ui.q)}" style="max-width:320px" aria-label="Search applications">
+    </div>
+    <div class="table-wrap"><table class="stack"><thead><tr><th>Applicant</th><th>Application</th><th>Submitted</th><th>Payment</th><th>Evidence</th><th>Status</th></tr></thead><tbody>
+    ${rows.map(a => { const p = person(a.personId); const evs = personEvidence(a.personId); const pay = db.payments.find(x => x.linkId === a.id);
+      const v = evs.filter(e => e.status === 'Verified').length, rj = evs.filter(e => e.status === 'Rejected').length;
+      return `<tr class="clickable" data-act="open-app" data-id="${a.id}" tabindex="0"><td><b>${esc(p.fullName)}</b><div class="small muted">${esc(p.category)}</div>${a.duplicateOf.length ? '<span class="badge b-bad">Possible duplicate</span>' : ''}</td>
+        <td class="mono small">${esc(a.id)}</td><td>${fmtDate(a.submitted)}</td><td>${pay ? badge(pay.status) : '<span class="badge">None</span>'}</td>
+        <td class="small">${v}/${evs.length} verified${rj ? `, <span style="color:var(--bad)">${rj} rejected</span>` : ''}</td><td>${badge(a.status)}</td></tr>`; }).join('') || '<tr><td colspan="6" class="empty">No applications match.</td></tr>'}
+    </tbody></table></div>
+  </div>`;
+}
+
+/* ============================================================
+   VIEW: Application review (admin)
+   ============================================================ */
+function vReview() {
+  const a = db.applications.find(x => x.id === ui.sel);
+  if (!a) return '<p class="empty">Application not found.</p>';
+  const p = person(a.personId), pid = p.id, reg = regFor(pid);
+  const pay = db.payments.find(x => x.linkId === a.id);
+  const quals = db.qualifications.filter(q => q.personId === pid), ins = db.insurance.filter(x => x.personId === pid), trn = db.training.filter(x => x.personId === pid);
+  const wps = db.workplaces.filter(w => w.personId === pid), dec = db.declarations.find(d => d.personId === pid);
+  const required = [...quals, ...ins].map(r => evidence(r.evidenceId));
+  const allVerified = required.every(e => e?.status === 'Verified');
+  const decided = ['Approved', 'Declined'].includes(a.status);
+  const canApprove = !decided && pay?.status === 'Paid' && allVerified;
+  const blockers = [];
+  if (pay?.status !== 'Paid') blockers.push('the fee has not been paid');
+  if (!allVerified) blockers.push('not all qualification and insurance evidence is verified');
+
+  const evBlock = e => e ? `<div class="ev"><div class="row between"><span class="small">\u{1F4CE} ${esc(e.fileName)} <span class="muted">(${fmtSize(e.fileSize)})</span></span>${badge(e.status)}</div>
+    ${!decided ? `<div class="row" style="margin-top:.45rem"><input type="text" id="r-${e.id}" placeholder="Reason or request (required to reject)" style="flex:1;min-width:180px">
+      <button class="btn small ok" data-act="ev" data-v="Verified" data-id="${e.id}">Verify</button>
+      <button class="btn small danger" data-act="ev" data-v="Rejected" data-id="${e.id}">Reject</button></div>` : ''}
+    <ul class="ev-hist">${e.history.map(h => `<li>${fmtDate(h.at)}: ${esc(h.status)} by ${esc(h.by)}${h.reason ? ' — ' + esc(h.reason) : ''}</li>`).join('')}</ul></div>` : '';
+
+  return `<div class="row between" style="margin-bottom:.5rem"><button class="btn small" data-act="go" data-view="queue">← Review queue</button>
+    <button class="btn small primary mobile-only" data-act="to-decision">Go to decision</button></div>
+  <div class="split">
+    <div>
+      <div class="card">
+        <div class="row between"><div><h1 style="margin:0">${esc(p.fullName)}</h1><div class="small muted mono">${esc(a.id)} · person ${esc(pid)}</div></div>${badge(a.status)}</div>
+        ${a.duplicateOf.length ? `<div class="err" style="margin-top:.75rem">Possible duplicate of ${a.duplicateOf.map(id => esc(person(id)?.fullName + ' (' + id + ')')).join(', ')}. Check before approving.</div>` : ''}
+        <div class="section-title"><h3>Personal details <span class="badge">Private</span></h3></div>
+        <dl class="kv"><dt>Category</dt><dd>${esc(p.category)}</dd><dt>Date of birth</dt><dd>${fmtDate(p.dob)}</dd><dt>Email</dt><dd>${esc(p.email)}</dd><dt>Phone</dt><dd>${esc(p.phone)}</dd><dt>Address</dt><dd>${esc(p.address)}, ${esc(p.eircode)}</dd><dt>Account created</dt><dd>${fmtDate(p.createdAt)}</dd></dl>
+        <div class="section-title"><h3>Workplaces (${wps.length})</h3></div>
+        ${wps.map(w => { const b = db.businesses.find(x => x.id === w.businessId); return `<p><b>${esc(b.name)}</b> <span class="badge b-brand">${esc(b.setting)}</span> <span class="small muted">${esc(w.employment)}, ${fmtDate(w.start)}${w.current ? ' to present' : ' to ' + fmtDate(w.end)}</span><br>
+          <span class="small">${esc(b.privateAddress || b.address)} ${esc(b.eircode)} · public: <i>${esc(b.publicLocation)}</i></span></p>`; }).join('')}
+        <div class="section-title"><h3>Qualifications (${quals.length})</h3></div>
+        ${quals.map(q => `<div style="margin-bottom:.6rem"><b>${esc(q.title)}</b><div class="small muted">${esc(q.awardingBody)} · ${esc(q.provider)} · ${fmtDate(q.awardDate)}${q.certNo ? ' · Cert ' + esc(q.certNo) : ''}</div>
+          <div class="small">Treatments: ${esc(q.treatments.join(', '))}</div>${evBlock(evidence(q.evidenceId))}</div>`).join('')}
+        <div class="section-title"><h3>Insurance (${ins.length})</h3></div>
+        ${ins.map(x => `<div style="margin-bottom:.6rem"><b>${esc(x.insurer)}</b> <span class="badge b-brand">${esc(x.coverType)}</span><div class="small muted">Policy ${esc(x.policyNo)} · ${fmtDate(x.from)} to ${fmtDate(x.to)} ${x.to < today() ? '<span class="badge b-bad">Expired</span>' : ''}</div>
+          <div class="small">Covers: ${esc(x.treatments.join(', '))}</div>${evBlock(evidence(x.evidenceId))}</div>`).join('')}
+        <div class="section-title"><h3>Additional training (${trn.length})</h3></div>
+        ${trn.length ? trn.map(x => `<div style="margin-bottom:.6rem"><b>${esc(x.title)}</b><div class="small muted">${esc(x.provider)} · ${fmtDate(x.completed)} · ${esc(x.treatment)}</div>${evBlock(evidence(x.evidenceId))}</div>`).join('') : '<p class="empty">None</p>'}
+        <div class="section-title"><h3>Declarations</h3></div>
+        ${dec ? `<p class="small">Version ${esc(dec.version)}, agreed ${fmtDate(dec.agreedAt)}: ${dec.items.length} of ${DECLARATIONS.length} declarations. News opt-in: ${dec.commsOptIn ? 'yes' : 'no'} (recorded separately).</p>` : '<p class="empty">None</p>'}
+      </div>
+    </div>
+    <div class="sticky">
+      <div class="card"><h2>Payment</h2>
+        ${pay ? `<dl class="kv"><dt>Status</dt><dd>${badge(pay.status)}</dd><dt>Amount</dt><dd>${money(pay.amount, pay.currency)}</dd><dt>Date</dt><dd>${fmtDate(pay.date)}</dd><dt>Provider ref</dt><dd class="mono small">${esc(pay.providerRef)}</dd><dt>Receipt</dt><dd class="mono small">${esc(pay.receipt)}</dd></dl>` : '<p class="empty">No payment recorded.</p>'}
+        <p class="hint">Payment never approves an application by itself.</p></div>
+      <div class="card" id="decision"><h2>Decision</h2>
+        ${decided ? `<p>${badge(a.status)} on ${fmtDate(a.decisionDate)} by ${esc(a.reviewer)}</p><p class="small">${esc(a.decisionReason)}</p>${reg ? `<p>Registration <b class="mono">${esc(reg.regNo)}</b> ${badge(reg.status)}</p>` : ''}`
+        : `<div class="err" role="alert" id="dec-err"></div>
+          <label for="dec-reason">Reason or message to applicant</label><textarea id="dec-reason" placeholder="Required when requesting evidence or declining"></textarea>
+          <div class="grid" style="margin-top:.6rem">
+            <button class="btn primary" data-act="decide" data-v="Approved" ${canApprove ? '' : 'disabled'}>Approve and issue registration number</button>
+            ${!canApprove ? `<p class="hint" style="margin:0">Approval is locked because ${blockers.join(' and ')}.</p>` : ''}
+            <button class="btn" data-act="decide" data-v="Further evidence needed">Request further evidence</button>
+            <button class="btn danger" data-act="decide" data-v="Declined">Decline</button>
+          </div>`}
+      </div>
+      <div class="card"><h2>History</h2><ul class="small" style="padding-left:1rem;margin:0">
+        ${db.audit.filter(x => x.entity === a.id || (reg && x.entity === reg.regNo)).map(x => `<li>${fmtDT(x.at)}: ${esc(x.action)} (${esc(x.actor)})${x.detail ? ' — ' + esc(x.detail) : ''}</li>`).join('') || '<li class="empty">No history yet.</li>'}</ul></div>
+    </div>
+  </div>`;
+}
+
+function setEvidence(evId, status) {
+  const e = evidence(evId), reason = ($('#r-' + evId)?.value || '').trim();
+  if (status === 'Rejected' && !reason) { const i = $('#r-' + evId); i.setAttribute('aria-invalid', 'true'); i.focus(); i.placeholder = 'Please give a reason before rejecting'; return; }
+  const prev = e.status;
+  e.status = status; e.history.push({ status, by:ADMIN, at:today(), reason });
+  const app = db.applications.find(x => x.id === ui.sel);
+  if (app.status === 'Pending') { app.status = 'Under review'; app.reviewer = ADMIN; audit(ADMIN, 'Status changed', app.id, 'Pending → Under review'); }
+  audit(ADMIN, 'Evidence ' + status.toLowerCase(), app.id, `${e.kind}: ${e.fileName} (${prev} → ${status})${reason ? '; ' + reason : ''}`);
+  render();
+}
+
+function decide(status) {
+  const a = db.applications.find(x => x.id === ui.sel), reason = ($('#dec-reason').value || '').trim();
+  if (status !== 'Approved' && !reason) { const box = $('#dec-err'); box.textContent = 'Please give a reason. The applicant will see it.'; $('#dec-reason').focus(); return; }
+  const prev = a.status, p = person(a.personId), s = db.settings;
+  a.status = status; a.reviewer = ADMIN; a.decisionReason = reason || 'All evidence verified.';
+  if (status !== 'Further evidence needed') a.decisionDate = today();
+  audit(ADMIN, 'Status changed', a.id, `${prev} → ${status}${reason ? '; ' + reason : ''}`);
+  if (status === 'Approved') {
+    let reg = regFor(p.id);
+    const start = today(), end = addDays(addMonths(start, s.periodMonths), -1);
+    const pay = db.payments.find(x => x.linkId === a.id);
+    if (!reg) {
+      reg = { regNo:'IBNR-' + String(s.nextRegNo++).padStart(6, '0'), personId:p.id, approved:start, status:'Active', periods:[], statusHistory:[] };
+      db.registrations.push(reg);
+    }
+    reg.status = 'Active'; reg.periods.push({ start, end, paymentId:pay?.id });
+    reg.statusHistory.push({ status:'Active', at:start, by:ADMIN, reason:'Application approved' });
+    if (pay) pay.period = `${start} to ${end}`;
+    audit(ADMIN, 'Registration issued', reg.regNo, `${p.fullName}; period ${start} to ${end}`);
+    notify('Registration approved: number and renewal date', p.email, reg.regNo);
+    s.reminderDays.split(',').map(n => parseInt(n, 10)).filter(n => n > 0).forEach(n =>
+      db.notifications.unshift({ id:uid('NTF'), type:`Renewal reminder (${n} days)`, recipient:p.email, scheduled:addDays(end, -n), sent:null, status:'Scheduled', link:reg.regNo }));
+    ui.flash = `Approved. ${p.fullName} has been issued ${reg.regNo}.`;
+  } else if (status === 'Further evidence needed') {
+    notify('Further evidence requested', p.email, a.id); ui.flash = 'Request sent to the applicant.';
+  } else {
+    notify('Application declined', p.email, a.id); ui.flash = 'Application declined and the applicant notified.';
+  }
+  render();
+}
+
+/* ============================================================
+   VIEW: Registrations (admin)
+   ============================================================ */
+function vRegister() {
+  let rows = db.registrations.slice();
+  if (ui.regFilter === 'due') rows = rows.filter(r => r.status === 'Active' && daysUntil(curPeriod(r).end) <= 60);
+  else if (ui.regFilter !== 'all') rows = rows.filter(r => r.status === ui.regFilter);
+  const insDue = db.insurance.filter(x => x.to >= today() && daysUntil(x.to) <= 60);
+  return `<h1>Registrations</h1>
+  <div class="card">
+    <div class="row between" style="margin-bottom:.75rem">
+      <select data-act="reg-filter" style="width:auto" aria-label="Filter registrations">${[['all', 'All'], ['due', 'Renewal due in 60 days'], ['Active', 'Active'], ['Expired', 'Expired'], ['Suspended', 'Suspended'], ['Withdrawn', 'Withdrawn']].map(([v, l]) => `<option value="${v}" ${ui.regFilter === v ? 'selected' : ''}>${l}</option>`).join('')}</select>
+      <button class="btn small" data-act="export">Export CSV (restricted)</button>
+    </div>
+    <div class="table-wrap"><table class="stack"><thead><tr><th>Number</th><th>Name</th><th>Status</th><th>Periods</th><th>Renewal due</th><th>Change status</th></tr></thead><tbody>
+    ${rows.map(r => { const p = person(r.personId), cp = curPeriod(r), dd = daysUntil(cp.end); return `<tr>
+      <td class="mono"><b>${esc(r.regNo)}</b></td><td>${esc(p.fullName)}</td><td>${badge(r.status)}</td>
+      <td class="small">${r.periods.map(x => `${fmtDate(x.start)} to ${fmtDate(x.end)}`).join('<br>')}</td>
+      <td>${fmtDate(cp.end)}${r.status === 'Active' && dd <= 60 ? ` <span class="badge b-warn">${dd} days</span>` : ''}</td>
+      <td><div class="row" style="flex-wrap:nowrap"><select id="st-${r.regNo}" aria-label="New status for ${esc(r.regNo)}" style="width:auto">${['Active', 'Suspended', 'Withdrawn'].filter(s => s !== r.status).map(s => `<option>${s}</option>`).join('')}</select>
+        <input type="text" id="sr-${r.regNo}" placeholder="Reason" style="width:130px"><button class="btn small" data-act="reg-status" data-reg="${r.regNo}">Apply</button></div></td></tr>`; }).join('') || '<tr><td colspan="6" class="empty">None.</td></tr>'}
+    </tbody></table></div>
+    <p class="hint">Only authorised administrators can suspend, reinstate or withdraw. Every change is written to the audit trail with a reason.</p>
+  </div>
+  ${ui.csv ? `<div class="card"><div class="row between"><h2>Export (CSV)</h2><div class="row"><button class="btn small" data-act="copy-csv">Copy</button><button class="btn small" data-act="close-csv">Close</button></div></div>
+    <p class="small muted">Registration numbers, names, statuses and verified treatments only. Contact details are left out.</p>
+    <textarea id="csv-out" readonly style="min-height:140px;font-family:ui-monospace,Consolas,monospace;font-size:.8rem">${esc(ui.csv)}</textarea></div>` : ''}
+  <div class="card"><h2>Insurance expiring in 60 days</h2>
+    ${insDue.length ? `<table class="stack"><thead><tr><th>Name</th><th>Insurer</th><th>Expires</th></tr></thead><tbody>${insDue.map(x => `<tr><td>${esc(person(x.personId).fullName)}</td><td>${esc(x.insurer)} (${esc(x.policyNo)})</td><td>${fmtDate(x.to)} <span class="badge b-warn">${daysUntil(x.to)} days</span></td></tr>`).join('')}</tbody></table>` : '<p class="empty">None.</p>'}</div>`;
+}
+
+function regStatus(regNo) {
+  const r = db.registrations.find(x => x.regNo === regNo), ns = $('#st-' + regNo).value, reason = $('#sr-' + regNo).value.trim();
+  if (!reason) { const i = $('#sr-' + regNo); i.setAttribute('aria-invalid', 'true'); i.placeholder = 'Reason required'; i.focus(); return; }
+  const prev = r.status; r.status = ns;
+  r.statusHistory.push({ status:ns, at:today(), by:ADMIN, reason });
+  audit(ADMIN, 'Registration status changed', regNo, `${prev} → ${ns}; ${reason}`);
+  notify(`Registration ${ns.toLowerCase()}`, person(r.personId).email, regNo);
+  ui.flash = `${regNo} is now ${ns}.`; render();
+}
+
+function exportCSV() {
+  const rows = [['Registration', 'Name', 'Status', 'Period start', 'Period end', 'Verified treatments']];
+  db.registrations.forEach(r => { const cp = curPeriod(r); rows.push([r.regNo, person(r.personId).fullName, r.status, cp.start, cp.end, verifiedTreatments(r.personId).join('; ')]); });
+  const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
+  ui.csv = csv;
+  audit(ADMIN, 'Export created', 'Registrations', `${rows.length - 1} rows (no contact details)`);
+  render(); document.getElementById('csv-out')?.scrollIntoView({ block:'center' });
+}
+
+/* ============================================================
+   VIEW: Audit + notifications (admin)
+   ============================================================ */
+function vAudit() {
+  return `<h1>Audit trail and notifications</h1>
+  <div class="card"><h2>Administrative history</h2><p class="small muted">Who changed what, and when. Restricted to authorised staff.</p>
+    <div class="table-wrap"><table class="stack"><thead><tr><th>When</th><th>Who</th><th>Action</th><th>Record</th><th>Detail</th></tr></thead><tbody>
+    ${db.audit.map(x => `<tr><td class="small">${fmtDT(x.at)}</td><td>${esc(x.actor)}</td><td>${esc(x.action)}</td><td class="mono small">${esc(x.entity)}</td><td class="small">${esc(x.detail)}</td></tr>`).join('')}
+    </tbody></table></div></div>
+  <div class="card"><h2>Notifications</h2><p class="small muted">Messages the system would send. In this demo nothing leaves the browser.</p>
+    <div class="table-wrap"><table class="stack"><thead><tr><th>Type</th><th>To</th><th>Scheduled</th><th>Status</th><th>Linked</th></tr></thead><tbody>
+    ${db.notifications.map(n => `<tr><td>${esc(n.type)}</td><td class="small">${esc(n.recipient)}</td><td>${fmtDate(n.scheduled)}</td><td class="small">${esc(n.status)}</td><td class="mono small">${esc(n.link)}</td></tr>`).join('')}
+    </tbody></table></div></div>`;
+}
+
+/* ============================================================
+   VIEW: Settings (admin)
+   ============================================================ */
+function vSettings() {
+  const s = db.settings;
+  return `<h1>Scheme settings</h1>
+  <form class="card" data-form="settings" novalidate>
+    <div class="err" role="alert"></div>
+    <h2>Fees and renewals</h2>
+    <div class="grid g3">
+      ${field('fee', 'Annual fee (EUR)', s.fee, { type:'number', attrs:'min="0" step="1"' })}
+      ${field('periodMonths', 'Registration period (months)', s.periodMonths, { type:'number', attrs:'min="1" max="60"' })}
+      ${field('reminderDays', 'Renewal reminders (days before)', s.reminderDays, { hint:'Comma separated' })}
+    </div>
+    <h2 style="margin-top:1.25rem">Organisation and headquarters</h2>
+    <p class="small muted">Fill these in once HQ is secured. No rebuild needed.</p>
+    <div class="grid g2">
+      ${field('orgName', 'Organisation name', s.orgName)}
+      ${field('hqEmail', 'Operating email', s.hqEmail, { type:'email', req:false })}
+      <div class="span2"><label for="f-hqAddress">HQ address <span class="opt">(optional until launch)</span></label><textarea id="f-hqAddress" name="hqAddress" placeholder="To be confirmed">${esc(s.hqAddress)}</textarea></div>
+      ${field('hqPhone', 'Operating phone', s.hqPhone, { type:'tel', req:false })}
+      ${field('declarationVersion', 'Current declaration version', s.declarationVersion)}
+    </div>
+    <h2 style="margin-top:1.25rem">Launch switches</h2>
+    <label class="check"><input type="checkbox" name="publicRegister" ${s.publicRegister ? 'checked' : ''}> Public register search is enabled</label>
+    <label class="check" style="opacity:.6"><input type="checkbox" disabled> Live payments and applications <span class="badge b-warn">Locked until launch is authorised</span></label>
+    <div class="row between" style="margin-top:1rem"><button type="button" class="btn danger" data-act="reset">Reset demo data</button><button type="button" class="btn primary" data-act="save-settings">Save settings</button></div>
+  </form>`;
+}
+
+function saveSettings() {
+  const form = $('[data-form=settings]'), fd = new FormData(form), s = db.settings, errs = [];
+  const fee = Number(fd.get('fee')), months = parseInt(fd.get('periodMonths'), 10);
+  if (!(fee >= 0)) errs.push('Fee must be zero or more.');
+  if (!(months >= 1 && months <= 60)) errs.push('Period must be between 1 and 60 months.');
+  if (!String(fd.get('orgName')).trim()) errs.push('Organisation name is required.');
+  if (!showErr(form, errs)) return;
+  const changes = [];
+  const set = (k, v) => { if (String(s[k]) !== String(v)) { changes.push(`${k}: ${s[k]} → ${v}`); s[k] = v; } };
+  set('fee', fee); set('periodMonths', months); set('reminderDays', String(fd.get('reminderDays')).trim()); set('orgName', String(fd.get('orgName')).trim());
+  set('hqEmail', String(fd.get('hqEmail')).trim()); set('hqAddress', String(fd.get('hqAddress')).trim()); set('hqPhone', String(fd.get('hqPhone')).trim());
+  set('declarationVersion', String(fd.get('declarationVersion')).trim()); set('publicRegister', !!fd.get('publicRegister'));
+  if (changes.length) audit(ADMIN, 'Settings changed', 'Settings', changes.join('; '));
+  ui.flash = changes.length ? 'Settings saved.' : 'No changes to save.'; render();
+}
+
+/* ============================================================
+   VIEW: Public register search
+   ============================================================ */
+function vPublic() {
+  if (!db.settings.publicRegister) return '<div class="card"><h1>Public register</h1><p>The public register is not available yet.</p></div>';
+  const q = ui.pubQ.trim().toLowerCase();
+  const results = db.registrations.filter(r => r.status === 'Active').map(r => {
+    const p = person(r.personId);
+    const locs = db.workplaces.filter(w => w.personId === r.personId && w.current).map(w => db.businesses.find(b => b.id === w.businessId))
+      .map(b => b.setting === 'Salon' ? `${b.name}, ${b.publicLocation}` : `${b.publicLocation}`);
+    return { r, p, locs, tr:verifiedTreatments(r.personId) };
+  }).filter(x => !q || [x.p.fullName, x.r.regNo, ...x.locs, ...x.tr].join(' ').toLowerCase().includes(q));
+  return `<div class="card" style="max-width:860px;margin:0 auto 1rem">
+    <h1>Find a registered professional</h1>
+    <p class="muted">Check that your beauty therapist or nail technician is on the ${esc(db.settings.orgName)}.</p>
+    <input type="search" data-act="pub-search" value="${esc(ui.pubQ)}" placeholder="Name, registration number, town or treatment" aria-label="Search the register">
+    <p class="hint">Only active registrations are listed. Contact details, home addresses, certificates and payments are never shown.</p>
+  </div>
+  <div style="max-width:860px;margin:0 auto">
+  ${results.map(x => `<div class="card pub-card"><div><h2 style="margin-bottom:.2rem">${esc(x.p.fullName)}</h2>
+      <div class="mono small">${esc(x.r.regNo)}</div>
+      <p class="small" style="margin-top:.5rem"><b>Where:</b> ${esc(x.locs.join(' · ') || 'Not listed')}</p>
+      <p class="small" style="margin:0"><b>Verified treatments:</b> ${esc(x.tr.join(', ') || 'None listed')}</p></div>
+    <div>${badge(x.r.status)}<div class="small muted" style="margin-top:.3rem">Registered until ${fmtDate(curPeriod(x.r).end)}</div></div></div>`).join('') || '<p class="empty">No registered professionals match your search.</p>'}
+  </div>`;
+}
+
+/* ---------- small UI helpers ---------- */
+function alertInline(msg) { ui.flash = null; const el = document.createElement('div'); el.className = 'err'; el.textContent = msg; $('#app').prepend(el); window.scrollTo(0, 0); }
+
+/* ============================================================
+   Event wiring
+   ============================================================ */
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-act]'); if (!t || t.tagName === 'SELECT' || t.type === 'search') return;
+  const act = t.dataset.act;
+  if (t.tagName === 'A') e.preventDefault();
+  switch (act) {
+    case 'go': go(t.dataset.view); break;
+    case 'open-app': go('review', { sel:t.dataset.id }); break;
+    case 'my': go('account', { myId:t.dataset.id }); break;
+    case 'new-app': ui.confirm = null; go('apply', { step:0 }); break;
+    case 'next': stepNext(); break;
+    case 'back': if (ui.step === 0) return; ui.step--; render(); window.scrollTo(0, 0); break;
+    case 'jump': ui.step = +t.dataset.step; render(); window.scrollTo(0, 0); break;
+    case 'add': addItem(t.dataset.list, t.closest('form')); break;
+    case 'remove': draft[t.dataset.list].splice(+t.dataset.i, 1); saveDraft(); render(); break;
+    case 'clear-draft': draft = blankDraft(); saveDraft(); ui.step = 0; render(); break;
+    case 'lookup': {
+      const form = t.closest('form'), r = addressLookup(form.elements.eircode.value);
+      const hint = t.closest('div').parentElement.querySelector('.hint');
+      if (!r) { hint.textContent = 'That doesn’t look like a valid Eircode.'; hint.style.color = 'var(--bad)'; break; }
+      form.elements.eircode.value = r.eircode; form.elements.address.value = r.line;
+      if (form.elements.town) form.elements.town.value = r.town;
+      if (form.elements.publicLocation && !form.elements.publicLocation.value) form.elements.publicLocation.value = r.town;
+      hint.textContent = `Address found (demo lookup). Check and edit if needed.`; hint.style.color = ''; break;
+    }
+    case 'pay': pay(); break;
+    case 'ev': setEvidence(t.dataset.id, t.dataset.v); break;
+    case 'decide': decide(t.dataset.v); break;
+    case 'resubmit': resubmit(t.dataset.id); break;
+    case 'renew': renew(t.dataset.reg); break;
+    case 'reg-status': regStatus(t.dataset.reg); break;
+    case 'export': exportCSV(); break;
+    case 'save-settings': saveSettings(); break;
+    case 'reset':
+      if (!t.dataset.armed) { t.dataset.armed = '1'; t.textContent = 'Click again to clear all demo changes'; break; }
+      db = seed(); draft = blankDraft(); saveDraft(); ui.confirm = null; ui.csv = null; go('overview', { flash:null }); ui.flash = 'Demo data reset.'; render(); break;
+    case 'copy-csv': {
+      const ta = document.getElementById('csv-out');
+      const done = () => { t.textContent = 'Copied'; };
+      const fallback = () => { ta.focus(); ta.select(); t.textContent = 'Selected: press Ctrl+C'; };
+      try { navigator.clipboard.writeText(ui.csv).then(done, fallback); } catch (err) { fallback(); }
+      break;
+    }
+    case 'close-csv': ui.csv = null; render(); break;
+    case 'menu': ui.menuOpen = !ui.menuOpen; renderNav(); break;
+    case 'to-decision': document.getElementById('decision')?.scrollIntoView({ block:'start' }); break;
+    case 'install':
+      if (installPrompt) { installPrompt.prompt(); installPrompt.userChoice.finally(() => { installPrompt = null; $('#install-btn').hidden = true; }); }
+      break;
+  }
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && ui.menuOpen) { ui.menuOpen = false; renderNav(); $('#menu-btn').focus(); } });
+window.matchMedia('(min-width: 901px)').addEventListener?.('change', ev => { if (ev.matches && ui.menuOpen) { ui.menuOpen = false; renderNav(); } });
+
+/* ---------- Installable app (PWA) ---------- */
+let installPrompt = null;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installPrompt = e; $('#install-btn').hidden = false; });
+window.addEventListener('appinstalled', () => { installPrompt = null; $('#install-btn').hidden = true; });
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+  window.addEventListener('load', () => {
+    try { navigator.serviceWorker.register('sw.js').catch(() => {}); } catch (err) { /* not available here, e.g. inside an embedded viewer */ }
+  });
+}
+document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.matches('tr.clickable')) e.target.click(); });
+document.addEventListener('change', e => {
+  const t = e.target;
+  if (t.dataset.file) {
+    const f = t.files[0], hint = document.getElementById('filehint-' + t.dataset.file);
+    if (f && f.size > 10 * 1048576) { t.value = ''; delete pendingFiles[t.dataset.file]; if (hint) { hint.textContent = 'File is larger than 10 MB.'; hint.style.color = 'var(--bad)'; } return; }
+    if (f) { pendingFiles[t.dataset.file] = { name:f.name, size:f.size }; if (hint) { hint.textContent = `Selected: ${f.name} (${fmtSize(f.size)})`; hint.style.color = ''; } }
+  }
+  if (t.dataset.act === 'filter') { ui.filter = t.value; render(); }
+  if (t.dataset.act === 'reg-filter') { ui.regFilter = t.value; render(); }
+  if (t.dataset.act === 'pick-me') { ui.myId = t.value; ui.flash = null; render(); }
+});
+document.addEventListener('input', e => {
+  const t = e.target;
+  if (t.dataset.act === 'search' || t.dataset.act === 'pub-search') {
+    const key = t.dataset.act === 'search' ? 'q' : 'pubQ', pos = t.selectionStart;
+    ui[key] = t.value; render();
+    const el = document.querySelector(`[data-act="${t.dataset.act}"]`); el.focus(); el.setSelectionRange(pos, pos);
+  }
+});
+document.addEventListener('submit', e => e.preventDefault());
+
+render();
+</script>
+</body>
+</html>
